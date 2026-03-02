@@ -5,7 +5,7 @@
 * **An HTTP based protocol for agents, context retrieval, APIs, and more**
 * **Drafted by: @XBToshi**
 * **[XMR402.org](XMR402.org) / Protocol Spec / x402**
-* **Draft v1.0 / March 2026**
+* **Draft v1.0.1 / March 2026**
 
 ## Abstract
 The internet is shifting. Human browsing is out; autonomous AI agents are in. But the underlying payment infrastructure is stuck in Web2. Credit cards, account registrations, fiat gateways—AI agents don't have bank accounts. Hit a paywall, and they just crash. 
@@ -58,9 +58,11 @@ WWW-Authenticate: XMR402 address="8...", amount="5000000000", message="nonce123"
 
 The client (human terminal or AI gateway) broadcasts the transaction. After grabbing the TX hash, it calls the local Monero wallet's `get_tx_proof`. Crucially, it mixes the server's `message` into the signature payload, generating a cryptographic credential strictly bound to the current session.
 
+If the request is from a human via browser deep link (`xmr402://`), the client may provide a `return_url`. The wallet Terminal will transparently execute a callback by appending the `txid` and `proof` to the `return_url` and bouncing the user back to the web portal.
+
 ### 2.3 Zero-Conf Verification
 
-The client re-fires the HTTP request, packing the credential into the header:
+The client (either via the Agent script or the Browser intercepting the callback) simply re-fires the identical HTTP request, packing the credential into the header:
 
 ```http
 Authorization: XMR402 txid="<hash>", proof="<signature>"
