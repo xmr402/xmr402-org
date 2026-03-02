@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, ChevronRight, RefreshCw, Layers, Cpu, Globe } from 'lucide-react';
 
 const WORKER_URL = "https://demo-api.xmr402.org";
@@ -12,6 +12,47 @@ export const XMR402Demo: React.FC = () => {
   // Manual form inputs
   const [manualTxid, setManualTxid] = useState('');
   const [manualProof, setManualProof] = useState('');
+
+  // Handle Transparent Handback via return_url parameters
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const txid = params.get('xmr402_txid');
+    const proof = params.get('xmr402_proof');
+
+    if (txid && proof) {
+      // Clear URL state gracefully without triggering reload
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      // Auto-populate the terminal simulation as complete
+      setManualTxid(txid);
+      setManualProof(proof);
+      setStage('verifying');
+
+      // Attempt verification against API instantly
+      verifyCredentials(txid, proof);
+    }
+  }, []);
+
+  const verifyCredentials = async (txid: string, proof: string) => {
+    try {
+      const authHeader = `XMR402 txid="${txid}", proof="${proof}"`;
+      const res = await fetch(`${WORKER_URL}/intel`, {
+        headers: { 'Authorization': authHeader }
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setIntel(data);
+        setStage('authorized');
+      } else {
+        setError(`Proof rejected: HTTP ${res.status}`);
+        setStage('authorized'); // Reset to authorized or error view depending on design
+      }
+    } catch (e: any) {
+      setError(`Verification error: ${e.message}`);
+      setStage('authorized');
+    }
+  };
 
   const startDemo = async () => {
     setStage('challenging');
@@ -46,7 +87,11 @@ export const XMR402Demo: React.FC = () => {
 
   const authorizeWithRipley = () => {
     if (!challenge) return;
-    const url = `xmr402://${challenge.address}?amount=${challenge.amount}&message=${encodeURIComponent(challenge.message)}`;
+
+    // Inject return_url for transparent handback
+    const returnUrl = encodeURIComponent(window.location.href);
+    const url = `xmr402://${challenge.address}?amount=${challenge.amount}&message=${encodeURIComponent(challenge.message)}&return_url=${returnUrl}`;
+
     window.location.href = url;
     // We stay in 'pending' stage so user can either use the automatic return or manual input
   };

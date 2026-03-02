@@ -1,4 +1,4 @@
-# 📜 XMR402 Protocol Specification (v1.0)
+# 📜 XMR402 Protocol Specification (v1.0.1)
 
 XMR402 is a stateless, decentralized HTTP payment gating protocol. Designed specifically for AI Agents and sovereign users, it leverages Monero (XMR) transaction proofs (TX Proof) to enable millisecond-level 0-conf (zero-confirmation) resource unlocking.
 
@@ -27,6 +27,19 @@ sequenceDiagram
     Note over S: RPC: check_tx_proof<br/>Verify 0-conf mempool TX
     S-->>C: HTTP 200 OK (Access Granted)
 ```
+
+## 🔐 Deep Link Schema (`xmr402://`)
+
+To facilitate seamless integration with OS-level wallets, the standard URI schema is:
+
+```http
+xmr402://<address>?amount=<piconero>&message=<nonce>&return_url=<callback>
+```
+
+- **address**: The recipient Monero address.
+- **amount**: The requested payment in atomic units.
+- **message**: The server-provided nonce for replay protection.
+- **return_url** *(optional)*: A URL-encoded callback address (introduced in v1.0.1). If provided, the terminal MUST execute a transparent handback by appending `xmr402_txid` and `xmr402_proof` as query parameters and routing the user back to the web UI.
 
 ## 🔐 Header Standards
 
