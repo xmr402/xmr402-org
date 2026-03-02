@@ -400,6 +400,10 @@ function App() {
             }
           />
           <FAQItem
+            question="Is 0-conf safe from double-spend attacks?"
+            answer="XMR402 relies on 0-confirmation (mempool) transactions to ensure the zero-latency access required by AI agents and active API streams. While 0-conf carries a theoretical risk of double-spending or chain reorgs, the economic incentive to attack a micro-payment (e.g., $0.005) is vastly outweighed by the cost and difficulty of the attack. XMR402 is strictly optimized for high-frequency, low-value digital interactions where this tactical trade-off is mathematically sound."
+          />
+          <FAQItem
             question="Does it require a special wallet?"
             answer="XMR402 is compatible with any wallet that supports the Monero Transaction Proof (TX Proof) standard. For the most seamless and tactical experience, we recommend using the Ripley Terminal."
           />
