@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>XMR402 | The Tactical Standard for AI-Native Payments</title>
+  <meta name="description"
+    content="XMR402 is an open, neutral standard for internet-native payments. It empowers agentic micro-transactions between clients and servers with zero friction and maximum privacy." />
+  <meta name="keywords"
+    content="XMR402, Monero, AI Payments, Micro-transactions, HTTP 402, Agentic Web, Privacy Payments" />
+  <meta name="author" content="@xbtoshi" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://xmr402.org/" />
+  <meta property="og:title" content="XMR402 | The Tactical Standard for AI-Native Payments" />
+  <meta property="og:description"
+    content="Natively integrated payments for the agentic web. Zero friction, zero protocol fees, pure sovereignty." />
+  <meta property="og:image" content="https://xmr402.org/og-image.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:creator" content="@xbtoshi" />
+  <meta property="twitter:url" content="https://xmr402.org/" />
+  <meta property="twitter:title" content="XMR402 | The Tactical Standard for AI-Native Payments" />
+  <meta property="twitter:description"
+    content="Natively integrated payments for the agentic web. Zero friction, zero protocol fees, pure sovereignty." />
+  <meta property="twitter:image" content="https://xmr402.org/og-image.png" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "XMR402",
+      "url": "https://xmr402.org/",
+      "description": "An open, neutral standard for internet-native payments between clients and servers.",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is XMR402 used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "XMR402 is designed for high-frequency, low-friction micro-payments. Key use cases include pay-per-request API access, dynamic content gating, autonomous AI agent interactions, and decentralized service monetization without the need for traditional account systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is XMR402 production ready?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The XMR402 v1.0 specification is finalized. Stable reference implementations are available in TypeScript, Go, and Rust. It is currently undergoing production-grade integration within the Ripley AI ecosystem and the Ghost Protocol."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I integrate XMR402?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Integration is straightforward. Developers can deploy the Ripley Guard middleware on the server-side to intercept requests and issue challenges. Clients must be configured to handle HTTP 402 responses by initiating the XMR402 deep-link protocol with a compatible wallet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What blockchains does XMR402 support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "While the XMR402 standard is blockchain-agnostic, it prioritizes Monero (XMR) due to its superior privacy primitives and native transaction proof capabilities. Compatibility with other privacy-preserving networks is currently under research."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it require a special wallet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "XMR402 is compatible with any wallet that supports the Monero Transaction Proof (TX Proof) standard. For the most seamless and tactical experience, we recommend using the Ripley Terminal."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
