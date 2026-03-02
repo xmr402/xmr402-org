@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --bg-primary: #050505;
   --bg-panel: #0a0a0a;
@@ -16,8 +18,8 @@
   --bg-code: #f1f5f9;
   --brand-color: #047857;
   --text-primary: #0f172a;
-  --text-dim: #64748b;
-  --border-color: #cbd5e1;
+  --text-dim: #475569;
+  --border-color: #d1d5db;
 }
 
 body {
@@ -36,6 +38,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8rem;
+}
+
+@media (max-width: 768px) {
+  .portal-container {
+    padding: 2.5rem 1.25rem;
+    gap: 4.5rem;
+  }
 }
 
 /* Header Actions */
@@ -66,7 +75,7 @@ body {
 .action-btn:hover {
   border-color: var(--brand-color);
   color: var(--brand-color);
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--brand-color), transparent 90%);
 }
 
 /* Hero Section */
@@ -77,7 +86,7 @@ body {
 .status-badge {
   display: inline-block;
   padding: 4px 12px;
-  background: rgba(0, 255, 65, 0.05);
+  background: color-mix(in srgb, var(--brand-color), transparent 95%);
   border: 1px solid var(--border-color);
   color: var(--brand-color);
   font-size: 0.7rem;
@@ -100,6 +109,14 @@ body {
   color: var(--text-dim);
   margin-top: 1.5rem;
   font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .subtitle {
+    font-size: 1rem;
+    margin-top: 1rem;
+    padding: 0 0.5rem;
+  }
 }
 
 /* Sections */
@@ -155,6 +172,17 @@ section h2::after {
   line-height: 1.6;
 }
 
+@media (max-width: 768px) {
+  .advantage-card {
+    padding: 1.75rem;
+  }
+
+  .advantages-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 /* Tactical Flow Optimization */
 .flow-header {
   display: flex;
@@ -171,7 +199,7 @@ section h2::after {
 .tab-switcher {
   display: flex;
   gap: 0.25rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-primary);
   padding: 4px;
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -276,7 +304,7 @@ section h2::after {
   text-transform: uppercase;
   letter-spacing: 2px;
   padding: 3px 8px;
-  background: rgba(0, 255, 65, 0.08);
+  background: color-mix(in srgb, var(--brand-color), transparent 92%);
   border: 1px solid var(--border-color);
   color: var(--brand-color);
   border-radius: 3px;
@@ -322,7 +350,7 @@ section h2::after {
   top: 1.25rem;
   right: 1.25rem;
   color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-primary);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   cursor: pointer;
@@ -356,8 +384,28 @@ section h2::after {
   border-bottom: 1px solid var(--border-color);
 }
 
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-color);
+  background: var(--bg-panel);
+}
+
+@media (max-width: 768px) {
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .table-container {
+    margin: 0 -0.25rem;
+  }
+}
+
 .comparison-table th {
-  background: rgba(0, 0, 0, 0.2);
+  background: color-mix(in srgb, var(--text-dim), transparent 90%);
   color: var(--text-dim);
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -376,6 +424,12 @@ section h2::after {
   padding: 3rem;
   border-radius: 8px;
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .one-liner-box {
+    padding: 1.5rem;
+  }
 }
 
 .one-liner-header {
@@ -402,6 +456,13 @@ section h2::after {
   line-height: 1.6;
 }
 
+@media (max-width: 768px) {
+  .one-liner-header {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
 /* Implementations Grid (Horizontal Row) */
 .implementations-grid {
   display: grid;
@@ -422,8 +483,8 @@ section h2::after {
 .impl-card:hover {
   border-color: var(--brand-color);
   transform: translateY(-4px);
-  background: rgba(0, 255, 65, 0.02);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  background: color-mix(in srgb, var(--brand-color), transparent 98%);
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, #000, transparent 50%);
 }
 
 .impl-header {
@@ -528,12 +589,13 @@ footer a {
 
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 3.5rem;
-    letter-spacing: -3px;
+    font-size: 3rem;
+    letter-spacing: -2px;
   }
 
   .portal-container {
-    padding: 2rem 1rem;
+    padding: 2.5rem 1.25rem;
+    gap: 4.5rem;
   }
 
   .header-actions {
@@ -547,10 +609,24 @@ footer a {
     gap: 1.5rem;
   }
 
+  .flow-step {
+    gap: 1.25rem;
+  }
+
+  .step-badge-container {
+    width: 32px;
+  }
+
+  .step-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
   .impl-card {
     flex-direction: column;
     gap: 1rem;
-    padding: 2rem;
+    padding: 1.75rem;
   }
 
   .impl-icon {
@@ -565,5 +641,17 @@ footer a {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+
+  .step-content h4 {
+    font-size: 1.1rem;
+  }
+
+  .code-block {
+    padding: 1.25rem;
+  }
+
+  .code-block code {
+    font-size: 0.8rem;
   }
 }

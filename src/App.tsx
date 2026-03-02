@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Sun, Moon, Monitor, ChevronDown, ChevronUp, ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, Github, ExternalLink, Box, Cpu, Laptop } from 'lucide-react'
+import { Sun, Moon, Monitor, ChevronDown, ChevronUp, ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, Github, ExternalLink, Box, Cpu, Laptop, FileText } from 'lucide-react'
 import { useTheme } from './hooks/useTheme'
+import { XMR402Demo } from './components/XMR402Demo'
 import './index.css'
 
 const ProtocolStep = ({ number, title, actor, description }: { number: string, title: string, actor: string, description: string }) => (
@@ -22,12 +23,12 @@ const ProtocolStep = ({ number, title, actor, description }: { number: string, t
 const FAQItem = ({ question, answer }: { question: string, answer: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <div className={`faq-item border-b border-white/10 py-4 cursor-pointer transition-all duration-300 ${isOpen ? 'bg-white/5 px-4' : ''}`} onClick={() => setIsOpen(!isOpen)}>
+    <div className={`faq-item border-b border-[var(--border-color)] py-4 cursor-pointer transition-all duration-300 ${isOpen ? 'bg-[var(--brand-color)]/5 px-4' : ''}`} onClick={() => setIsOpen(!isOpen)}>
       <div className="flex justify-between items-center group">
-        <h4 className={`text-lg transition-colors ${isOpen ? 'text-white' : 'text-zinc-400 group-hover:text-white'}`}>{question}</h4>
-        {isOpen ? <ChevronUp className="text-zinc-500" size={20} /> : <ChevronDown className="text-zinc-500" size={20} />}
+        <h4 className={`text-lg transition-colors ${isOpen ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-dim)] group-hover:text-[var(--text-primary)]'}`}>{question}</h4>
+        {isOpen ? <ChevronUp className="text-[var(--text-dim)]" size={20} /> : <ChevronDown className="text-[var(--text-dim)]" size={20} />}
       </div>
-      {isOpen && <div className="mt-4 text-zinc-400 animate-in fade-in slide-in-from-top-2 duration-300 leading-relaxed">{answer}</div>}
+      {isOpen && <div className="mt-4 text-[var(--text-dim)] animate-in fade-in slide-in-from-top-2 duration-300 leading-relaxed">{answer}</div>}
     </div>
   )
 }
@@ -60,11 +61,13 @@ const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
 function App() {
   const { mode, cycleTheme } = useTheme()
   const [activeFlow, setActiveFlow] = useState<'human' | 'agent'>('human')
+  const [showDemoModal, setShowDemoModal] = useState(false)
 
   const oneLinerCode = `app.use(
   paymentMiddleware({
     "GET /weather": {
       accepts: ["XMR"],
+      amount: 0.001,
       description: "Weather data",
     },
   })
@@ -92,9 +95,25 @@ function App() {
         <div className="status-badge">PROTOCOL v1.0 • IETF COMPLIANT</div>
         <h1>XMR402</h1>
         <p className="subtitle">The Internet’s Sovereignty Layer for AI & Human Micro-transactions.</p>
-        <p className="max-w-2xl mx-auto mt-6 text-zinc-500 leading-relaxed">
+        <p className="max-w-2xl mx-auto mt-6 text-[var(--text-dim)] leading-relaxed">
           XMR402 is an open, neutral standard for internet-native payments. It absolves the Internet's original sin by natively making payments possible between clients and servers, creating win-win economies that empower agentic payments at scale. XMR402 exists to build a more free and fair internet.
         </p>
+        <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4">
+          <button
+            onClick={() => setShowDemoModal(true)}
+            className="px-8 py-3 bg-[var(--brand-color)] text-black font-black uppercase text-sm tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+          >
+            INTERACT WITH PROTOCOL
+          </button>
+          <a
+            href="/XMR402_Whitepaper.pdf"
+            target="_blank"
+            className="px-8 py-3 border border-[var(--border-color)] text-[var(--text-primary)] font-black uppercase text-sm tracking-widest hover:bg-[var(--brand-color)]/10 transition-all flex items-center justify-center gap-2 text-center"
+          >
+            <FileText size={18} />
+            WHITEPAPER
+          </a>
+        </div>
       </header>
 
       {/* ONE-LINER SECTION */}
@@ -141,7 +160,7 @@ function App() {
       {/* CODE DEMO */}
       <section id="demo">
         <h2>Tactical Implementation</h2>
-        <div className="spec-preview" style={{ gridTemplateColumns: '1fr', gap: '1rem' }}>
+        <div className="spec-preview">
           <CodeBlock label="Standard 402 Response (Server-side)" code={server402Code} />
           <CodeBlock label="Authorization Header (Client-side)" code={clientAuthCode} />
         </div>
@@ -254,46 +273,48 @@ function App() {
             </>
           )}
         </div>
-      </section>
+      </section >
 
       {/* COMPARISONS */}
-      <section id="comparisons">
+      < section id="comparisons" >
         <h2>Evolution of Payment</h2>
-        <table className="comparison-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Legacy XMR Payment</th>
-              <th>XMR402 Standard</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="feature">Verification Speed</td>
-              <td>Minutes (Wait for block)</td>
-              <td>Seconds (0-conf TX Proof)</td>
-            </tr>
-            <tr>
-              <td className="feature">Friction</td>
-              <td>Manual Address Copy-Paste</td>
-              <td>Zero-click Deep-link Union</td>
-            </tr>
-            <tr>
-              <td className="feature">UI/UX</td>
-              <td>Polling / Refreshing</td>
-              <td>Real-time Gate Unlocking</td>
-            </tr>
-            <tr>
-              <td className="feature">Agent Support</td>
-              <td>Impossible for AI</td>
-              <td>Native HTTP Standard</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+        <div className="table-container">
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Legacy XMR Payment</th>
+                <th>XMR402 Standard</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="feature">Verification Speed</td>
+                <td>Minutes (Wait for block)</td>
+                <td>Seconds (0-conf TX Proof)</td>
+              </tr>
+              <tr>
+                <td className="feature">Friction</td>
+                <td>Manual Address Copy-Paste</td>
+                <td>Zero-click Deep-link Union</td>
+              </tr>
+              <tr>
+                <td className="feature">UI/UX</td>
+                <td>Polling / Refreshing</td>
+                <td>Real-time Gate Unlocking</td>
+              </tr>
+              <tr>
+                <td className="feature">Agent Support</td>
+                <td>Impossible for AI</td>
+                <td>Native HTTP Standard</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section >
 
       {/* IMPLEMENTATIONS SHOWCASE */}
-      <section id="implementations">
+      < section id="implementations" >
         <h2>Reference Implementations</h2>
         <div className="implementations-grid">
           <div className="impl-card border-t-2 border-emerald-500">
@@ -350,12 +371,12 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* FAQ */}
-      <section id="faq">
+      < section id="faq" >
         <h2>Frequently Asked Questions</h2>
-        <div className="faq-grid flex flex-col gap-0 border-t border-white/10">
+        <div className="faq-grid flex flex-col gap-0 border-t border-[var(--border-color)]">
           <FAQItem
             question="What is XMR402 used for?"
             answer="XMR402 is designed for high-frequency, low-friction micro-payments. Key use cases include pay-per-request API access, dynamic content gating, autonomous AI agent interactions, and decentralized service monetization without the need for traditional account systems."
@@ -381,12 +402,23 @@ function App() {
             answer="XMR402 is compatible with any wallet that supports the Monero Transaction Proof (TX Proof) standard. For the most seamless and tactical experience, we recommend using the Ripley Terminal."
           />
         </div>
-      </section>
+      </section >
 
       <footer>
         <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/KYC-rip/XMR402-org" target="_blank">XMR402 REPO</a> • Standardized v1.0 • 2026</p>
       </footer>
-    </div>
+
+      {showDemoModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[1000] p-4 animate-fade-in" onClick={() => setShowDemoModal(false)}>
+          <div className="bg-[var(--bg-panel)] border border-[var(--border-color)] rounded-lg w-full max-w-[800px] max-h-[90vh] overflow-y-auto relative shadow-[0_20px_40px_rgba(0,0,0,0.4)]" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute top-1 right-2 bg-transparent text-[var(--text-dim)] hover:text-[var(--brand-color)] transition-colors p-2 text-2xl z-[1010]" onClick={() => setShowDemoModal(false)}>
+              &times;
+            </button>
+            <XMR402Demo />
+          </div>
+        </div>
+      )}
+    </div >
   )
 }
 
