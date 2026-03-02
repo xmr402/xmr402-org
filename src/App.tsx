@@ -25,10 +25,10 @@ const FAQItem = ({ question, answer }: { question: string, answer: React.ReactNo
   return (
     <div className={`faq-item border-b border-[var(--border-color)] py-4 cursor-pointer transition-all duration-300 ${isOpen ? 'bg-[var(--brand-color)]/5 px-4' : ''}`} onClick={() => setIsOpen(!isOpen)}>
       <div className="flex justify-between items-center group">
-        <h4 className={`text-lg transition-colors ${isOpen ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-dim)] group-hover:text-[var(--text-primary)]'}`}>{question}</h4>
+        <h4 className={`text-lg mx-2 transition-colors ${isOpen ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-dim)] group-hover:text-[var(--text-primary)]'}`}>{question}</h4>
         {isOpen ? <ChevronUp className="text-[var(--text-dim)]" size={20} /> : <ChevronDown className="text-[var(--text-dim)]" size={20} />}
       </div>
-      {isOpen && <div className="mt-4 text-[var(--text-dim)] animate-in fade-in slide-in-from-top-2 duration-300 leading-relaxed">{answer}</div>}
+      {isOpen && <div className="mt-4 mx-4 text-[var(--text-dim)] animate-in fade-in slide-in-from-top-2 duration-300 leading-relaxed">{answer}</div>}
     </div>
   )
 }
@@ -53,7 +53,9 @@ const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
         {copied ? <Check size={16} /> : <Copy size={16} />}
         {copied && <span className="text-[10px] ml-1 uppercase tracking-tighter">Copied</span>}
       </button>
-      <code>{code}</code>
+      <div className="code-scroll-container">
+        <code>{code}</code>
+      </div>
     </div>
   )
 }
@@ -91,7 +93,7 @@ function App() {
       </div>
 
       {/* HERO */}
-      <header className="hero">
+      <header className="hero mt-16">
         <div className="status-badge">PROTOCOL v1.0 • IETF COMPLIANT</div>
         <h1>XMR402</h1>
         <p className="subtitle">The Internet’s Sovereignty Layer for AI & Human Micro-transactions.</p>

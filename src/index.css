@@ -321,11 +321,10 @@ section h2::after {
 /* Code Blocks */
 .code-block {
   background: var(--bg-code);
-  padding: 2rem;
+  padding: 0;
   border: 1px solid var(--border-color);
   border-radius: 6px;
   position: relative;
-  overflow-x: auto;
 }
 
 .code-block h3 {
@@ -333,9 +332,19 @@ section h2::after {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 0 0 1.5rem 0;
+  margin: 2rem 2rem 1.5rem 2rem;
   border-left: 2px solid var(--brand-color);
   padding-left: 0.75rem;
+}
+
+.code-scroll-container {
+  overflow-x: auto;
+  padding: 0 2rem 2rem 2rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.code-block h3+.code-scroll-container {
+  padding-top: 0;
 }
 
 .code-block code {
@@ -343,6 +352,7 @@ section h2::after {
   font-size: 0.9rem;
   white-space: pre;
   line-height: 1.5;
+  display: block;
 }
 
 .copy-btn {
