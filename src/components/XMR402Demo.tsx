@@ -45,12 +45,12 @@ export const XMR402Demo: React.FC = () => {
         setIntel(data);
         setStage('authorized');
       } else {
-        setError(`Proof rejected: HTTP ${res.status}`);
-        setStage('authorized'); // Reset to authorized or error view depending on design
+        setError(`Proof rejected: The node has not seen this transaction yet (HTTP ${res.status}). Try manually waiting a moment and clicking Execute Protocol. `);
+        setStage(challenge ? 'pending' : 'idle');
       }
     } catch (e: any) {
       setError(`Verification error: ${e.message}`);
-      setStage('authorized');
+      setStage(challenge ? 'pending' : 'idle');
     }
   };
 
