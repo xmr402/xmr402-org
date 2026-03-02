@@ -46,7 +46,7 @@ export const XMR402Demo: React.FC = () => {
 
   const authorizeWithRipley = () => {
     if (!challenge) return;
-    const url = `ripley://402/${challenge.address}?amount=${challenge.amount}&message=${encodeURIComponent(challenge.message)}`;
+    const url = `xmr402://${challenge.address}?amount=${challenge.amount}&message=${encodeURIComponent(challenge.message)}`;
     window.location.href = url;
     // We stay in 'pending' stage so user can either use the automatic return or manual input
   };

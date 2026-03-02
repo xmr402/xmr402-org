@@ -125,7 +125,7 @@ function App() {
             <Terminal size={20} />
             <span>Accept payments with a single line of code</span>
           </div>
-          <CodeBlock code={oneLinerCode} />
+          <CodeBlock code={oneLinerCode} label="With Ripley Guard" />
           <div className="one-liner-footer">
             That's it. Add one line of code to require payment for each incoming request. If a request arrives without payment, the server responds with HTTP 402, prompting the client to pay and retry.
           </div>
