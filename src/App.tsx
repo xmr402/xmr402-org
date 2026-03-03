@@ -63,7 +63,13 @@ const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
 function App() {
   const { mode, cycleTheme } = useTheme()
   const [activeFlow, setActiveFlow] = useState<'human' | 'agent'>('human')
-  const [showDemoModal, setShowDemoModal] = useState(false)
+  const [showDemoModal, setShowDemoModal] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return params.has('xmr402_txid');
+    }
+    return false;
+  });
 
   const oneLinerCode = `app.use(
   paymentMiddleware({
