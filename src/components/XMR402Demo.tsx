@@ -13,6 +13,9 @@ export const XMR402Demo: React.FC = () => {
   const [manualTxid, setManualTxid] = useState('');
   const [manualProof, setManualProof] = useState('');
 
+  // Terminal detection state
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+
   // 5-minute expiry timer
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
@@ -115,7 +118,20 @@ export const XMR402Demo: React.FC = () => {
     const url = `xmr402://${challenge.address}?amount=${challenge.amount}&message=${encodeURIComponent(challenge.message)}&return_url=${returnUrl}`;
 
     window.location.href = url;
-    // We stay in 'pending' stage so user can either use the automatic return or manual input
+
+    // Deep-link fallback detection
+    // If the browser doesn't lose focus in 2.5 seconds, the app likely didn't launch
+    const timeout = setTimeout(() => {
+      if (document.hasFocus()) {
+        setShowInstallPrompt(true);
+      }
+    }, 2500);
+
+    const handleBlur = () => {
+      clearTimeout(timeout);
+      window.removeEventListener('blur', handleBlur);
+    };
+    window.addEventListener('blur', handleBlur);
   };
 
   const verifyManual = async () => {
@@ -155,6 +171,7 @@ export const XMR402Demo: React.FC = () => {
     setManualTxid('');
     setManualProof('');
     setTimeRemaining(null);
+    setShowInstallPrompt(false);
   };
 
   return (
@@ -264,6 +281,22 @@ export const XMR402Demo: React.FC = () => {
                 >
                   {timeRemaining === 0 ? 'TIME_EXPIRED' : 'EXECUTE_PROTOCOL'} <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>
+                {showInstallPrompt && (
+                  <div className="mt-4 p-4 border border-rose-500/30 bg-rose-500/5 rounded animate-in fade-in slide-in-from-top-2">
+                    <p className="text-[10px] text-rose-500/90 uppercase mb-3 font-bold leading-relaxed tracking-wider">
+                      Terminal_Not_Detected
+                    </p>
+                    <a
+                      href="https://kyc.rip/wallet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] uppercase font-black text-[var(--text-primary)] hover:text-[var(--brand-color)] transition-colors flex items-center justify-between group"
+                    >
+                      <span className="border-b border-transparent group-hover:border-[var(--brand-color)] pb-0.5">Download Ripley Terminal</span>
+                      <Globe size={12} className="opacity-50 group-hover:opacity-100 group-hover:text-[var(--brand-color)]" />
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* Manual Flow */}
