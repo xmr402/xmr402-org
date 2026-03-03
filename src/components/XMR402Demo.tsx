@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, ChevronRight, RefreshCw, Layers, Cpu, Globe } from 'lucide-react';
+import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, ChevronRight, RefreshCw, Layers, Cpu, Globe, Timer } from 'lucide-react';
 
 const WORKER_URL = "https://demo-api.xmr402.org";
 
@@ -12,6 +12,27 @@ export const XMR402Demo: React.FC = () => {
   // Manual form inputs
   const [manualTxid, setManualTxid] = useState('');
   const [manualProof, setManualProof] = useState('');
+
+  // 5-minute expiry timer
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (timeRemaining === null || stage !== 'pending') return;
+
+    if (timeRemaining <= 0) return;
+
+    const timerObj = setInterval(() => {
+      setTimeRemaining(prev => (prev !== null && prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timerObj);
+  }, [timeRemaining, stage]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  };
 
   // Handle Transparent Handback via return_url parameters
   useEffect(() => {
@@ -71,6 +92,7 @@ export const XMR402Demo: React.FC = () => {
           amount: amountMatch?.[1],
           message: messageMatch?.[1]
         });
+        setTimeRemaining(300); // 5 minutes
         setStage('pending');
       } else {
         const data = await res.json();
@@ -132,6 +154,7 @@ export const XMR402Demo: React.FC = () => {
     setError(null);
     setManualTxid('');
     setManualProof('');
+    setTimeRemaining(null);
   };
 
   return (
@@ -185,7 +208,16 @@ export const XMR402Demo: React.FC = () => {
               <div className="flex items-center gap-3">
                 <Lock size={14} className="text-amber-500 animate-pulse" />
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500">402_Payment_Required</span>
-                <span className="text-[9px] text-[var(--text-dim)] uppercase font-bold ml-auto hidden sm:block">Protocol_Handshake: Pending_Settlement</span>
+
+                <div className="ml-auto flex items-center gap-4">
+                  {timeRemaining !== null && (
+                    <div className={`flex items-center gap-1.5 text-[10px] font-black tracking-wider ${timeRemaining === 0 ? 'text-red-500' : 'text-amber-500'}`}>
+                      <Timer size={12} className={timeRemaining > 0 && timeRemaining <= 60 ? 'animate-pulse' : ''} />
+                      {timeRemaining > 0 ? formatTime(timeRemaining) : 'EXPIRED'}
+                    </div>
+                  )}
+                  <span className="text-[9px] text-[var(--text-dim)] uppercase font-bold hidden sm:block">Protocol_Handshake: Pending_Settlement</span>
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 border-t border-white/5 pt-4">
@@ -227,9 +259,10 @@ export const XMR402Demo: React.FC = () => {
                 </p>
                 <button
                   onClick={authorizeWithRipley}
-                  className="px-6 sm:px-8 py-3 sm:py-4 bg-[var(--brand-color)] text-black font-black uppercase tracking-widest text-[10px] sm:text-xs transition-all inline-flex items-center justify-center gap-2 hover:-translate-y-[1px] hover:opacity-90 active:translate-y-0 w-full group"
+                  disabled={timeRemaining === 0}
+                  className={`px-6 sm:px-8 py-3 sm:py-4 bg-[var(--brand-color)] text-black font-black uppercase tracking-widest text-[10px] sm:text-xs transition-all inline-flex items-center justify-center gap-2 hover:-translate-y-[1px] hover:opacity-90 active:translate-y-0 w-full group disabled:opacity-20 disabled:hover:translate-y-0`}
                 >
-                  EXECUTE_PROTOCOL <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  {timeRemaining === 0 ? 'TIME_EXPIRED' : 'EXECUTE_PROTOCOL'} <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
 
@@ -257,7 +290,7 @@ export const XMR402Demo: React.FC = () => {
                   />
                   <button
                     onClick={verifyManual}
-                    disabled={!manualTxid || !manualProof}
+                    disabled={!manualTxid || !manualProof || timeRemaining === 0}
                     className="w-full py-3 bg-[var(--bg-primary)] border border-white/10 text-[var(--brand-color)] font-black uppercase text-[9px] sm:text-[10px] tracking-[0.2em] hover:bg-[rgba(0,255,65,0.05)] hover:border-[var(--brand-color)] transition-all disabled:opacity-20 disabled:hover:bg-[var(--bg-primary)] disabled:hover:border-white/10"
                   >
                     VERIFY_UPLINK
