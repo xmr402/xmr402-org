@@ -219,7 +219,7 @@ function App() {
                 number="03"
                 title="OS Deep-Link"
                 actor="Deep Link"
-                description="Browser catches the 402 response and triggers ripley://402 to wake up the local terminal."
+                description="Browser catches the 402 response and triggers xmr402:// to wake up the local terminal."
               />
               <ProtocolStep
                 number="04"
