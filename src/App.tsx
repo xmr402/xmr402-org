@@ -36,7 +36,7 @@ function App() {
       </Switch>
 
       <footer>
-        <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/KYC-rip/XMR402-org" target="_blank">XMR402 REPO</a> • Standardized v1.0 • 2026</p>
+        <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/KYC-rip/XMR402-org" target="_blank">XMR402 REPO</a> • Standardized v1.0.1 • 2026</p>
       </footer>
     </div>
   )

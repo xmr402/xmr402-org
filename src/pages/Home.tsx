@@ -375,7 +375,7 @@ export function Home() {
           />
           <FAQItem
             question="Is XMR402 production ready?"
-            answer="The XMR402 v1.0 specification is finalized. Stable reference implementations are available in TypeScript, Go, and Rust. It is currently undergoing production-grade integration within the Ripley AI ecosystem and the Ghost Protocol."
+            answer="The XMR402 v1.0.1 specification is finalized. Stable reference implementations are available in TypeScript, Go, and Rust. It is currently undergoing production-grade integration within the Ripley AI ecosystem and the Ghost Protocol."
           />
           <FAQItem
             question="How do I integrate XMR402?"
