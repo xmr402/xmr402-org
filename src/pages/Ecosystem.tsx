@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, Github, Terminal, Zap, ShieldCheck, HeartHandshake, Wallet, Wrench, Globe, Twitter } from 'lucide-react'
+import { Box, Github, Terminal, Zap, ShieldCheck, HeartHandshake, Wallet, Wrench, Globe, Twitter, Star } from 'lucide-react'
 
 const CategoryIconMap: Record<string, React.ReactNode> = {
   'guards': <ShieldCheck size={20} className="text-emerald-500" />,
@@ -33,6 +33,89 @@ interface EcosystemData {
   categories: Category[];
   featured_ids: string[];
   projects: Project[];
+}
+
+function ProjectCard({ project, categoryName }: { project: Project; categoryName: string }) {
+  return (
+    <div key={project.id} className="bg-[var(--bg-panel)] border border-[var(--border-color)] border-t-[3px] border-t-[var(--text-primary)] p-0 hover:border-[var(--brand-color)] hover:border-t-[var(--brand-color)] transition-all flex flex-col h-full relative group shadow-sm bg-gradient-to-b from-[var(--bg-panel)] to-transparent">
+      <div className="p-5 flex-grow">
+        {/* CARD HEADER: LOGO/FALLBACK & CATEGORY TAG */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex gap-3 w-full min-w-0 pr-2">
+            {/* LOGO BOX */}
+            <div className="w-12 h-12 rounded-sm border border-[var(--border-color)] bg-[var(--bg-primary)] flex items-center justify-center overflow-hidden flex-shrink-0">
+              {project.logo_url ? (
+                <img src={project.logo_url} alt={project.name} className="w-full h-full object-contain p-1" />
+              ) : (
+                <span className="text-xl font-black text-[var(--text-primary)] opacity-80 uppercase tracking-tighter">
+                  {project.name.charAt(0)}{project.name.charAt(1)}
+                </span>
+              )}
+            </div>
+
+            {/* CATEGORY & TITLE */}
+            <div className="flex flex-col justify-center min-w-0 flex-grow">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[10px] uppercase font-bold text-[var(--text-dim)] tracking-wider bg-[var(--bg-primary)] border border-[var(--border-color)] px-1.5 py-0.5 rounded-sm whitespace-nowrap">
+                  {categoryName}
+                </span>
+              </div>
+              <h4 className="text-lg font-bold text-[var(--text-primary)] leading-tight truncate w-full" title={project.name}>{project.name}</h4>
+            </div>
+          </div>
+
+          {/* STATUS BADGE */}
+          <div className="flex-shrink-0 absolute top-4 right-4">
+            {(project.status === 'Mainnet Live' || project.status === "Production") && (
+              <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2 py-0.5 text-[10px] uppercase font-bold rounded">LIVE</div>
+            )}
+            {(project.status === 'Alpha' || project.status === 'Beta') && (
+              <div className="bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2 py-0.5 text-[10px] uppercase font-bold rounded">{project.status}</div>
+            )}
+            {project.status === 'Planning' && (
+              <div className="bg-[var(--text-dim)]/10 text-[var(--text-dim)] border border-[var(--border-color)] px-2 py-0.5 text-[10px] uppercase font-bold rounded">DEV</div>
+            )}
+          </div>
+        </div>
+
+        {/* TAGLINE */}
+        <p className="text-[var(--text-dim)] text-sm leading-relaxed mt-2 line-clamp-6 min-h-[5.5rem]">
+          {project.tagline}
+        </p>
+      </div>
+
+      {/* CARD FOOTER: LINKS & AUTHOR */}
+      <div className="px-5 py-3 border-t border-[var(--border-color)] flex items-center justify-between bg-[var(--bg-primary)]/50">
+        <div className="flex items-center gap-3">
+          {project.url && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[var(--brand-color)] hover:opacity-80 transition-all p-1.5 border border-[var(--border-color)] hover:border-[var(--brand-color)] bg-[var(--bg-primary)] rounded-sm" title="Visit Website">
+              <Globe size={14} />
+            </a>
+          )}
+          {project.github && project.github !== 'PENDING_PR' && (
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-[var(--text-dim)] hover:text-white transition-all p-1.5 border border-[var(--border-color)] hover:border-white bg-[var(--bg-primary)] rounded-sm" title="View Source">
+              <Github size={14} />
+            </a>
+          )}
+        </div>
+        <div className="text-[10px] uppercase tracking-widest text-[var(--text-dim)] font-mono truncate max-w-[120px] flex items-center gap-1.5" title={project.author}>
+          {project.author.startsWith('@') ? (
+            <a
+              href={`https://x.com/${project.author.substring(1)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 hover:text-[var(--brand-color)] transition-colors"
+            >
+              <Twitter size={10} />
+              {project.author}
+            </a>
+          ) : (
+            project.author
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export function Ecosystem() {
@@ -131,6 +214,31 @@ export function Ecosystem() {
             </div>
           </div>
         )}
+        {/* FEATURED SECTION (Only show when "Everything" is selected) */}
+        {activeCategory === 'all' && data.featured_ids.length > 0 && (
+          <section className="mb-16">
+            <div className="flex items-end justify-between mb-6 pb-2 border-b border-[var(--border-color)]">
+              <div>
+                <h3 className="text-2xl font-black uppercase text-[var(--brand-color)] flex items-center gap-3 leading-tight">
+                  <Star size={24} fill="var(--brand-color)" className="opacity-80" />
+                  Featured
+                </h3>
+                <p className="text-[var(--text-dim)] text-sm mt-1">Stellar implementations pushing the XMR402 standard forward.</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {data.projects
+                .filter(p => data.featured_ids.includes(p.id))
+                .map(project => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    categoryName={data.categories.find(c => c.id === project.category)?.name || project.category}
+                  />
+                ))}
+            </div>
+          </section>
+        )}
 
         {/* LISTINGS */}
         {filteredCategories.map(category => {
@@ -154,86 +262,11 @@ export function Ecosystem() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {catProjects.map(project => (
-                    <div key={project.id} className="bg-[var(--bg-panel)] border border-[var(--border-color)] border-t-[3px] border-t-[var(--text-primary)] p-0 hover:border-[var(--brand-color)] hover:border-t-[var(--brand-color)] transition-all flex flex-col h-full relative group shadow-sm bg-gradient-to-b from-[var(--bg-panel)] to-transparent">
-
-                      <div className="p-5 flex-grow">
-                        {/* CARD HEADER: LOGO/FALLBACK & CATEGORY TAG */}
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex gap-3 w-full min-w-0 pr-2">
-                            {/* LOGO BOX */}
-                            <div className="w-12 h-12 rounded-sm border border-[var(--border-color)] bg-[var(--bg-primary)] flex items-center justify-center overflow-hidden flex-shrink-0">
-                              {project.logo_url ? (
-                                <img src={project.logo_url} alt={project.name} className="w-full h-full object-contain p-1" />
-                              ) : (
-                                <span className="text-xl font-black text-[var(--text-primary)] opacity-80 uppercase tracking-tighter">
-                                  {project.name.charAt(0)}{project.name.charAt(1)}
-                                </span>
-                              )}
-                            </div>
-
-                            {/* CATEGORY & TITLE */}
-                            <div className="flex flex-col justify-center min-w-0 flex-grow">
-                              <div className="flex items-center gap-2 mb-0.5">
-                                <span className="text-[10px] uppercase font-bold text-[var(--text-dim)] tracking-wider bg-[var(--bg-primary)] border border-[var(--border-color)] px-1.5 py-0.5 rounded-sm whitespace-nowrap">
-                                  {category.name}
-                                </span>
-                              </div>
-                              <h4 className="text-lg font-bold text-[var(--text-primary)] leading-tight truncate w-full" title={project.name}>{project.name}</h4>
-                            </div>
-                          </div>
-
-                          {/* STATUS BADGE */}
-                          <div className="flex-shrink-0 absolute top-4 right-4">
-                            {(project.status === 'Mainnet Live' || project.status === "Production") && (
-                              <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2 py-0.5 text-[10px] uppercase font-bold rounded">LIVE</div>
-                            )}
-                            {(project.status === 'Alpha' || project.status === 'Beta') && (
-                              <div className="bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2 py-0.5 text-[10px] uppercase font-bold rounded">{project.status}</div>
-                            )}
-                            {project.status === 'Planning' && (
-                              <div className="bg-[var(--text-dim)]/10 text-[var(--text-dim)] border border-[var(--border-color)] px-2 py-0.5 text-[10px] uppercase font-bold rounded">DEV</div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* TAGLINE */}
-                        <p className="text-[var(--text-dim)] text-sm leading-relaxed mt-2 line-clamp-6 min-h-[5.5rem]">
-                          {project.tagline}
-                        </p>
-                      </div>
-
-                      {/* CARD FOOTER: LINKS & AUTHOR */}
-                      <div className="px-5 py-3 border-t border-[var(--border-color)] flex items-center justify-between bg-[var(--bg-primary)]/50">
-                        <div className="flex items-center gap-3">
-                          {project.url && (
-                            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[var(--brand-color)] hover:opacity-80 transition-all p-1.5 border border-[var(--border-color)] hover:border-[var(--brand-color)] bg-[var(--bg-primary)] rounded-sm" title="Visit Website">
-                              <Globe size={14} />
-                            </a>
-                          )}
-                          {project.github && project.github !== 'PENDING_PR' && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-[var(--text-dim)] hover:text-white transition-all p-1.5 border border-[var(--border-color)] hover:border-white bg-[var(--bg-primary)] rounded-sm" title="View Source">
-                              <Github size={14} />
-                            </a>
-                          )}
-                        </div>
-                        <div className="text-[10px] uppercase tracking-widest text-[var(--text-dim)] font-mono truncate max-w-[120px] flex items-center gap-1.5" title={project.author}>
-                          {project.author.startsWith('@') ? (
-                            <a
-                              href={`https://x.com/${project.author.substring(1)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1 hover:text-[var(--brand-color)] transition-colors"
-                            >
-                              <Twitter size={10} />
-                              {project.author}
-                            </a>
-                          ) : (
-                            project.author
-                          )}
-                        </div>
-                      </div>
-
-                    </div>
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      categoryName={category.name}
+                    />
                   ))}
                 </div>
               )}
