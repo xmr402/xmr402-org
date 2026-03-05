@@ -94,6 +94,9 @@ body {
   letter-spacing: 2px;
   margin-bottom: 1.5rem;
   border-radius: 2px;
+  display: flex;
+    flex-direction: row;
+    max-width: fit-content;
 }
 
 .hero h1 {
