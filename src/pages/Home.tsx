@@ -224,7 +224,7 @@ export function Home() {
                 number="05"
                 title="Submission"
                 actor="Authorization"
-                description="Terminal submits the TXID and TX-Proof back to the server's guard callback."
+                description="Terminal submits the TXID and TX-Proof back to the server via the return_url."
               />
               <ProtocolStep
                 number="06"
