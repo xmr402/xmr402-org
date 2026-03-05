@@ -77,9 +77,11 @@ The server extracts the proof and hits the Monero node with a lightweight `check
 
 Monero's privacy hides the sender and the amount. But its proof mechanism lets us cryptographically verify that a specific transaction paid a specific amount to a specific address. By checking the mempool, we crush the crypto payment delay from 10 minutes down to 200 milliseconds.
 
-### Absolute Statelessness: The HMAC Engine
+### Absolute Statelessness: The Hardened HMAC Engine
 
-The server stores zero nonces. It dynamically calculates an HMAC-SHA256 hash using a server secret, the client's IP, and a time window to generate the `message`. When the proof comes back, the server recalculates the hash and compares. No database. Massive concurrency.
+The server stores zero nonces. To prevent **instruction replacement attacks**, the server dynamically calculates a stateless HMAC-SHA256 hash using a server secret, the client's IP, a hash of the request payload (Instruction Binding), the target URL, and a sliding time window. 
+
+When the proof comes back, the server recalculates this binding and compares it to the proof's message. This ensures that a payment for "Instruction A" cannot be reused for "Instruction B". No database. Massive concurrency. Military-grade security.
 
 ### Defending Wallet Bloat
 

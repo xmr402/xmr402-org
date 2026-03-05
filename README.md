@@ -5,9 +5,9 @@ XMR402 is an open, stateless, and decentralized HTTP payment standard built for 
 ## 🚀 Overview
 
 - **IETF Standard**: Fully compatible with `WWW-Authenticate` and `Authorization` headers.
+- **Instruction Binding**: Pay-per-instruction security via HMAC-SHA256 payload binding.
 - **Privacy First**: Built on Monero's subaddress and stealth technology.
-- **Agent Native**: Designed for autonomous AI-to-Service payments without human intervention.
-- **Zero Friction**: No accounts, no signups, no data harvesting.
+- **Agent Native**: Designed for autonomous AI-to-Service payments.
 
 ## 📂 Repository Structure
 
@@ -29,7 +29,7 @@ npm run dev
 ### 1. The Challenge (Server to Client)
 ```http
 HTTP 402 Payment Required
-WWW-Authenticate: XMR402 address="<subaddress>", amount="<piconero>", message="<nonce>"
+WWW-Authenticate: XMR402 address="<subaddress>", amount="<piconero>", message="<nonce>", timestamp="<unix_ms>"
 ```
 
 ### 2. The Proof (Client to Server)

@@ -86,7 +86,7 @@ export function Home() {
     <>
       {/* HERO */}
       <header className="hero mt-16">
-        <div className="status-badge inline-flex!">PROTOCOL v1.0 • IETF COMPLIANT</div>
+        <div className="status-badge inline-flex!">PROTOCOL v{import.meta.env.VITE_PROTOCOL_VERSION || '1.0.1'} • IETF COMPLIANT</div>
         <h1>XMR402</h1>
         <p className="subtitle">The Internet’s Sovereignty Layer for AI & Human Micro-transactions.</p>
         <p className="max-w-2xl mx-auto mt-6 text-[var(--text-dim)] leading-relaxed">

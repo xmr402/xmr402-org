@@ -46,11 +46,13 @@ xmr402://<address>?amount=<piconero>&message=<nonce>&return_url=<callback>
 ### 1. Server-Side Challenge
 When an unauthorized request arrives, the server MUST intercept and return HTTP 402, attaching payment instructions in the header:
 ```http
-WWW-Authenticate: XMR402 address="<subaddress>", amount="<piconero>", message="<nonce>"
+WWW-Authenticate: XMR402 address="<subaddress>", amount="<piconero>", message="<nonce>", timestamp="<unix_ms>"
 ```
 - **address**: The Monero subaddress designated for this specific transaction.
 - **amount**: The required payment amount in atomic units (Piconero, 1 XMR = 1e12).
-- **message**: A randomly generated anti-replay string (Nonce) that the client must include in the signature.
+- **message**: A unique, stateless anti-replay string (Nonce). To prevent **instruction replacement attacks**, the nonce MUST be bound to the request payload:
+  `nonce = HMAC(server_secret, client_ip + payload_hash + url + time_window)`
+- **timestamp**: The current server time in milliseconds. Recommended for clients to synchronize their local time window.
 
 ### 2. Client-Side Proof
 After completing the payment and obtaining the TX Proof, the client includes the credentials in a standard Authorization header and retries the request:
