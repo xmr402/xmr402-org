@@ -29,7 +29,7 @@ sequenceDiagram
     participant S as Server (Ripley Guard)
 
     C->>S: GET /protected-resource
-    S-->>C: HTTP 402 Payment Required<br/>WWW-Authenticate: XMR402 address="...", amount="...", message="..."
+    S-->>C: HTTP 402 Payment Required<br/>WWW-Authenticate: XMR402 address="...", amount="...", message="...", timestamp="..."
     
     C->>W: Request Payment Execution (address, amount, message)
     
