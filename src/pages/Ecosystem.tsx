@@ -124,7 +124,7 @@ export function Ecosystem() {
   const [activeCategory, setActiveCategory] = useState<string>('all')
 
   useEffect(() => {
-    fetch('http://eco.xmr402.org/ecosystem.json')
+    fetch('https://kyc-rip.github.io/xmr402-ecosystem/ecosystem.json')
       .then(res => res.json())
       .then((json: EcosystemData) => {
         setData(json)
