@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Copy, Check, Heart, Shield, Zap } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import QRCode from 'react-qr-code'
 
 export function Donate() {
   const [copied, setCopied] = useState(false)
-  const [activeTab, setActiveTab] = useState<'openalias' | 'address'>('openalias')
   const [xmrAddress, setXmrAddress] = useState<string>('82txTMTFiXihfBeJL5E6keb1p8pzGhdAMb1u6dwnCu66hBgP8orJSKAMuAMjg5HkaTaSTRUVDHo67WAv3FFjt4CW73b8scF') // Fallback
   const openAlias = 'donate.xmr402.org'
 
@@ -23,107 +22,64 @@ export function Donate() {
   }, [])
 
   const copyToClipboard = () => {
-    // Note: In a real app, uses navigator.clipboard.writeText
-    // For this demo, we just show the success state
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   return (
-    <div className="donate-page animate-fade-in">
-      <header className="hero">
-        <div className="status-badge inline-flex!">DIRECT CONTRIBUTION • OPENALIAS ACTIVE</div>
-        <h1>SUPPORT</h1>
-        <p className="subtitle">Powering the Sovereignty Layer for AI & Human Micro-payments.</p>
-      </header>
+    <div className="donate-page animate-fade-in text-left max-w-3xl mx-auto px-4 mt-8 pb-16">
+      <h1 className="text-4xl font-black mb-6 tracking-tight text-[var(--text-primary)]">Donate to the Ecosystem</h1>
+      <p className="text-[var(--text-dim)] mb-10 leading-relaxed text-lg">
+        Donations to the general fund are used to support XMR402 protocol development, ecosystem expansion, and public RPC infrastructure. Infrastructure costs are currently covered by core sponsors.
+      </p>
 
-      <div className="flow-header mt-16 justify-center!">
-        <div className="tab-switcher">
-          <button
-            className={activeTab === 'openalias' ? 'active' : ''}
-            onClick={() => setActiveTab('openalias')}
-          >
-            OPENALIAS
-          </button>
-          <button
-            className={activeTab === 'address' ? 'active' : ''}
-            onClick={() => setActiveTab('address')}
-          >
-            ADDRESS & QR
-          </button>
-        </div>
-      </div>
+      <h2 className="text-2xl font-bold mb-6 border-b border-[var(--border-color)] pb-3 text-[var(--text-primary)]">General Fund</h2>
+      <p className="mb-6 text-[var(--text-dim)]">You can donate Monero directly to the core development pool:</p>
 
-      <div className="mt-8 max-w-xl mx-auto">
-        {activeTab === 'openalias' ? (
-          /* OPENALIAS CARD */
-          <div className="advantage-card border-brand! animate-fade-in">
-            <div className="flex items-center gap-3 mb-4">
-              <Zap className="text-[var(--brand-color)]" size={24} />
-              <h3 className="m-0! uppercase tracking-wider">OpenAlias</h3>
-            </div>
-            <div className="bg-[var(--bg-primary)] border border-[var(--border-color)] p-4 rounded font-mono text-center relative group mt-8">
-              <span className="text-2xl font-bold tracking-tighter">{openAlias}</span>
-              <div className="text-[10px] text-[var(--text-dim)] mt-2 uppercase font-bold">Standardized Monero Routing</div>
-            </div>
-            <p className="mt-8 text-sm text-[var(--text-dim)] leading-relaxed text-center">
-              Send directly from any Monero wallet by typing <code className="text-[var(--brand-color)]">{openAlias}</code> in the recipient field.
-            </p>
+      <p className="mb-2 font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">Monero:</p>
+      <div
+        className="flex mb-6 cursor-pointer group"
+        onClick={() => { navigator.clipboard.writeText(xmrAddress); copyToClipboard(); }}
+        title="Click to copy"
+      >
+        <code className="bg-[var(--bg-code)] border border-[var(--border-color)] p-4 rounded font-mono break-all text-[14px] leading-relaxed text-[var(--brand-color)] flex-1 relative transition-all group-hover:border-[var(--brand-color)] shadow-sm">
+          {xmrAddress}
+          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-[var(--bg-panel)] p-1 rounded border border-[var(--border-color)]">
+            {copied ? <Check size={18} className="text-[var(--brand-color)]" /> : <Copy size={18} className="text-[var(--text-dim)] hover:text-[var(--brand-color)]" />}
           </div>
-        ) : (
-          /* ADDRESS CARD */
-          <div className="advantage-card relative overflow-hidden h-full animate-fade-in">
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="text-[var(--brand-color)]" size={24} />
-              <h3 className="m-0! uppercase tracking-wider">Monero Address</h3>
-            </div>
-
-              <div className="flex justify-center mt-6 mb-8 p-4 bg-white rounded-lg w-fit mx-auto shadow-[0_0_30px_rgba(255,255,255,0.05)] border-4 border-[var(--border-color)]">
-                <div className="w-40 h-40 flex items-center justify-center">
-                  <QRCode
-                    value={`monero:${xmrAddress}`}
-                    size={160}
-                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                    viewBox={`0 0 160 160`}
-                  />
-                </div>
-              </div>
-              <div className="text-center mb-6 text-[10px] uppercase font-bold text-[var(--text-dim)] tracking-widest">Scan to Support</div>
-
-              <div className="address-container relative border-t border-[var(--border-color)] pt-6 mt-6">
-                <div className="bg-[var(--bg-primary)] border border-[var(--border-color)] p-4 rounded break-all font-mono text-[11px] leading-relaxed text-emerald-500/80 pr-12">
-                  {xmrAddress}
-                </div>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(xmrAddress);
-                    copyToClipboard();
-                  }}
-                  className="absolute top-8 right-2 p-2 bg-[var(--bg-panel)] border border-[var(--border-color)] rounded hover:border-[var(--brand-color)] hover:text-[var(--brand-color)] transition-all"
-                  title="Copy Address"
-                >
-                  {copied ? <Check size={14} /> : <Copy size={14} />}
-                </button>
-              </div>
-            </div>
-        )}
+        </code>
       </div>
 
-      <section className="mt-24 max-w-2xl mx-auto text-center">
-        <div className="flex justify-center mb-6">
-          <Heart className="text-rose-500 animate-pulse" size={32} />
-        </div>
-        <h2 className="justify-center! after:hidden!">Why Donate?</h2>
-        <p className="text-[var(--text-dim)] leading-relaxed text-lg">
-          Donations fund the development of the XMR402 standard, infrastructure for the Ecosystem directory,
-          and high-availability Monero RPC nodes for public usage.
-          Help us build a future where AI agents can trade value without gatekeepers.
-        </p>
-      </section>
+      <p className="mb-10 text-[var(--text-dim)] flex items-center flex-wrap gap-2">
+        <span className="font-bold text-sm tracking-widest uppercase">openalias:</span>
+        <code className="bg-[var(--bg-code)] border border-[var(--border-color)] px-3 py-1.5 rounded font-mono text-[var(--brand-color)]">{openAlias}</code>
+      </p>
 
-      <div className="text-center mt-12">
-        <a href="/" className="text-[var(--brand-color)] hover:underline font-bold tracking-widest uppercase text-xs">
-          ← Back to Protocol Base
+      <div className="flex flex-col sm:flex-row gap-8 mb-16">
+        <div className="text-center group">
+          <div className="bg-white p-3 rounded shadow-sm border-2 border-[var(--border-color)] inline-block transition-transform group-hover:scale-105">
+            <QRCode
+              value={`monero:${xmrAddress}`}
+              size={180}
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              viewBox={`0 0 180 180`}
+            />
+          </div>
+          <div className="mt-4 text-xs font-black uppercase tracking-widest text-[var(--text-dim)]">Scan Monero QR</div>
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-bold mb-6 border-b border-[var(--border-color)] pb-3 text-[var(--text-primary)]">Support the developers</h2>
+      <p className="text-[var(--text-dim)] leading-relaxed mb-6 text-lg">
+        The developers working on XMR402 are independent cypherpunks and researchers. By donating XMR, you are directly funding the open-source sovereignty layer for the AI and machine-to-machine economy.
+      </p>
+      <p className="text-[var(--text-dim)] leading-relaxed mb-6 text-lg">
+        If you wish to support specific builders in the ecosystem (wallets, gateways, skills), consider using their individual donation links found on the <a href="/ecosystem" className="text-[var(--brand-color)] hover:underline font-bold">Ecosystem Directory</a>.
+      </p>
+
+      <div className="mt-20 border-t border-[var(--border-color)] pt-8">
+        <a href="/" className="text-[var(--text-dim)] hover:text-[var(--brand-color)] transition-colors font-bold tracking-widest uppercase text-xs flex items-center gap-2 w-fit">
+          <span>←</span> Back to Protocol Base
         </a>
       </div>
     </div>
