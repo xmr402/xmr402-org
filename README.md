@@ -37,5 +37,3 @@ WWW-Authenticate: XMR402 address="<subaddress>", amount="<piconero>", message="<
 Authorization: XMR402 txid="<hash>", proof="<signature>"
 ```
 
----
-Built by [KYC.rip](https://kyc.rip)
