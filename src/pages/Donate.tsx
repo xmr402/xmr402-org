@@ -85,7 +85,7 @@ export function Donate() {
       </p>
 
       <div className="mt-20 border-t border-[var(--border-color)] pt-8">
-        <a href="/" className="text-[var(--text-dim)] hover:text-[var(--brand-color)] transition-colors font-bold tracking-widest uppercase text-xs flex items-center gap-2 w-fit">
+        <a href="https://xmr402.org" className="text-[var(--text-dim)] hover:text-[var(--brand-color)] transition-colors font-bold tracking-widest uppercase text-xs flex items-center gap-2 w-fit">
           <span>←</span> Back to Protocol Base
         </a>
       </div>
