@@ -57,13 +57,20 @@ export function Donate() {
 
       <div className="flex flex-col sm:flex-row gap-8 mb-16">
         <div className="text-center group">
-          <div className="bg-white p-3 rounded shadow-sm border-2 border-[var(--border-color)] inline-block transition-transform group-hover:scale-105">
+          <div className="bg-white p-3 rounded shadow-sm border-2 border-[var(--border-color)] inline-block relative transition-transform group-hover:scale-105">
             <QRCode
               value={`monero:${xmrAddress}`}
               size={180}
-              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              level="H"
+              style={{ height: "auto", maxWidth: "100%", width: "100%", display: "block" }}
               viewBox={`0 0 180 180`}
             />
+            {/* Logo Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="bg-white p-1 rounded-full w-14 h-14 flex items-center justify-center shadow-sm">
+                <img src="/monero.svg" alt="Monero Logo" className="w-10 h-10" />
+              </div>
+            </div>
           </div>
           <div className="mt-4 text-xs font-black uppercase tracking-widest text-[var(--text-dim)]">Scan Monero QR</div>
         </div>
