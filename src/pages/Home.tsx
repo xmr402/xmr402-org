@@ -79,7 +79,7 @@ export function Home() {
   })
 );`
 
-  const server402Code = `WWW-Authenticate: XMR402 address="8...", amount="1000", message="nonce_123"`
+  const server402Code = `WWW-Authenticate: XMR402 address="8...", amount="1000", message="nonce_123", timestamp="1710500000000"`
   const clientAuthCode = `Authorization: XMR402 txid="<hash>", proof="<signature>"`
 
   return (
@@ -308,6 +308,11 @@ export function Home() {
                 <td className="feature">Agent Support</td>
                 <td>Impossible for AI</td>
                 <td>Native HTTP Standard</td>
+              </tr>
+              <tr>
+                <td className="feature">Payload Security</td>
+                <td>Blind Payments</td>
+                <td>Instruction Binding (HMAC)</td>
               </tr>
             </tbody>
           </table>
