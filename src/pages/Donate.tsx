@@ -56,7 +56,7 @@ export function Donate() {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-8 mb-16">
-        <div className="text-center group">
+        <div className="text-center group hover:cursor-pointer" onClick={() => { location.href = `monero:${xmrAddress}` }}>
           <div className="bg-white p-3 rounded shadow-sm border-2 border-[var(--border-color)] inline-block relative transition-transform group-hover:scale-105">
             <QRCode
               value={`monero:${xmrAddress}`}
