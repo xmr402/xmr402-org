@@ -124,7 +124,7 @@ export function Ecosystem() {
   const [activeCategory, setActiveCategory] = useState<string>('all')
 
   useEffect(() => {
-    fetch('https://kyc-rip.github.io/xmr402-ecosystem/ecosystem.json')
+    fetch('https://xmr402.github.io/ecosystem/ecosystem.json')
       .then(res => res.json())
       .then((json: EcosystemData) => {
         setData(json)
@@ -284,7 +284,7 @@ export function Ecosystem() {
                 Built an XMR402 native app or skill? Add your project to this registry transparently through an open Pull Request.
               </p>
               <a
-                href="https://github.com/KYC-rip/xmr402-ecosystem/fork"
+                href="https://github.com/xmr402/ecosystem/fork"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--text-primary)] text-[var(--bg-primary)] font-black uppercase text-xs tracking-widest hover:bg-[var(--brand-color)] hover:opacity-90 transition-all rounded-sm"

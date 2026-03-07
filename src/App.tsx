@@ -14,7 +14,7 @@ function App() {
     <div className="portal-container">
       {/* HEADER ACTIONS */}
       <div className="header-actions">
-        <a href="https://github.com/KYC-rip/XMR402-org" target="_blank" rel="noopener noreferrer" className="action-btn" title="GitHub Repository">
+        <a href="https://github.com/xmr402/XMR402-org" target="_blank" rel="noopener noreferrer" className="action-btn" title="GitHub Repository">
           <Github size={20} />
         </a>
         <button onClick={cycleTheme} className="action-btn">
@@ -43,7 +43,7 @@ function App() {
       </Switch>
 
       <footer>
-        <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/KYC-rip/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v1.0.1 • 2026</p>
+        <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/xmr402/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v1.0.1 • 2026</p>
       </footer>
     </div>
   )

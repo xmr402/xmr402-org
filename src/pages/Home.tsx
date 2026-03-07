@@ -167,7 +167,7 @@ export function Home() {
         </div>
         <div className="spec-link-box" style={{ marginTop: '2rem' }}>
           <p className="mb-4">It's how the internet should be: open, free, and effortless.</p>
-          <a href="https://github.com/KYC-rip/XMR402-org/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/xmr402/XMR402-org/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">
             READ THE FULL SPECIFICATION ON GITHUB
           </a>
         </div>
