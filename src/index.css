@@ -141,7 +141,8 @@ section h2::after {
 }
 
 /* Advantages Grid */
-.advantages-grid {
+.advantages-grid,
+.donation-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
@@ -180,7 +181,8 @@ section h2::after {
     padding: 1.75rem;
   }
 
-  .advantages-grid {
+    .advantages-grid,
+    .donation-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }

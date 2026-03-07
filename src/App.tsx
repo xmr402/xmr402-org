@@ -3,10 +3,12 @@ import { Sun, Moon, Monitor, Github } from 'lucide-react'
 import { useTheme } from './hooks/useTheme'
 import { Home } from './pages/Home'
 import { Ecosystem } from './pages/Ecosystem'
+import { Donate } from './pages/Donate'
 import './index.css'
 
 function App() {
   const { mode, cycleTheme } = useTheme()
+  const isDonateSubdomain = window.location.hostname === 'donate.xmr402.org' || window.location.search.includes('donate=true');
 
   return (
     <div className="portal-container">
@@ -24,7 +26,12 @@ function App() {
 
       {/* ROUTES */}
       <Switch>
-        <Route path="/" component={Home} />
+        {isDonateSubdomain ? (
+          <Route path="/" component={Donate} />
+        ) : (
+            <Route path="/" component={Home} />
+        )}
+        <Route path="/donate" component={Donate} />
         <Route path="/ecosystem" component={Ecosystem} />
         <Route>
           {/* 404 Fallback */}
@@ -36,7 +43,7 @@ function App() {
       </Switch>
 
       <footer>
-        <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/KYC-rip/XMR402-org" target="_blank">XMR402 REPO</a> • Standardized v1.0.1 • 2026</p>
+        <p>A <a href="https://kyc.rip">KYC.rip</a> Initiative • <a href="https://github.com/KYC-rip/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v1.0.1 • 2026</p>
       </footer>
     </div>
   )
