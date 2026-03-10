@@ -2,8 +2,8 @@
 # XMR402: The Stateless, Anonymous Payment Primitive for the Machine Economy
 
 * **An agnostic protocol for agents, context retrieval, APIs, and P2P relays**
-* **Drafted by: @XBToshi**
-* **[XMR402.org](https://xmr402.org) / Protocol Spec / x402**
+* **Drafted by: [@XBToshi](https://x.com/xbtoshi)**
+* **[XMR402.org](https://xmr402.org) / [@XMR402](https://x.com/xmr402) / Protocol Spec / x402**
 * **Draft v2.0 / March 2026**
 
 ## Abstract
