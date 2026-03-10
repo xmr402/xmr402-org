@@ -46,7 +46,7 @@ function App() {
       </Switch>
 
       <footer>
-        <p><a href="https://x.com/xmr402" target="_blank text-emerald-500" className="text-emerald-500">@XMR402</a> • <a href="https://github.com/xmr402/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v2.0.0 • 2026</p>
+        <p><a href="https://x.com/xmr402" target="_blank" className="text-emerald-500">@XMR402</a> • <a href="https://github.com/xmr402/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v2.0.0 • 2026</p>
       </footer>
     </div>
   )
