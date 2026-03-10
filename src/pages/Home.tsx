@@ -155,6 +155,10 @@ export function Home() {
             <h3><GlobeLock size={18} className="text-rose-500" /> <span>Stateless Purity</span></h3>
             <p>No databases. No polling. No wallet tracking bloat. XMR402 architecture relies purely on math and node RPCs.</p>
           </div>
+          <div className="advantage-card border-l-2 border-emerald-500">
+            <h3><Zap size={18} className="text-emerald-500" /> <span>Zero protocol fees</span></h3>
+            <p>XMR402 is free for the customer and the merchant—just pay nominal network transaction fees.</p>
+          </div>
         </div>
       </section>
 
