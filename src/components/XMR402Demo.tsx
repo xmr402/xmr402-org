@@ -203,21 +203,21 @@ export const XMR402Demo: React.FC = () => {
     <div className="bg-[var(--bg-panel)] border border-[var(--border-color)] rounded-lg overflow-hidden font-mono relative w-full shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
       {/* Terminal Header */}
       <div className="bg-[rgba(0,255,65,0.05)] py-4 pl-5 pr-14 sm:pr-10 border-b border-[var(--border-color)] flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 border-r border-white/10 pr-4">
-            <Terminal size={12} className="text-[var(--brand-color)]" />
-            <h3 className="text-[10px] sm:text-xs font-black uppercase tracking-[0.15em] text-[var(--brand-color)] m-0">Sandbox_v2.0</h3>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 border-r border-white/10 pr-6">
+            <Terminal size={14} className="text-[var(--brand-color)]" />
+            <h3 className="text-[11px] sm:text-sm font-black uppercase tracking-[0.2em] text-[var(--brand-color)] m-0">Sandbox_v2.0</h3>
           </div>
-          <div className="flex gap-4">
-            <button
+          <div className="flex bg-black/40 p-1 rounded-sm border border-white/5">
+            <button 
               onClick={() => { if (stage === 'idle') setProtocol('http') }}
-              className={`text-[9px] uppercase font-black tracking-widest transition-colors ${protocol === 'http' ? 'text-[var(--brand-color)]' : 'text-[var(--text-dim)] hover:text-white'}`}
+              className={`px-4 py-1.5 text-[9px] sm:text-[10px] uppercase font-black tracking-widest transition-all ${protocol === 'http' ? 'bg-[var(--brand-color)] text-black' : 'text-[var(--text-dim)] hover:text-white'}`}
             >
               HTTP_REST
             </button>
-            <button
+            <button 
               onClick={() => { if (stage === 'idle') setProtocol('ws') }}
-              className={`text-[9px] uppercase font-black tracking-widest transition-colors ${protocol === 'ws' ? 'text-[var(--brand-color)]' : 'text-[var(--text-dim)] hover:text-white'}`}
+              className={`px-4 py-1.5 text-[9px] sm:text-[10px] uppercase font-black tracking-widest transition-all ${protocol === 'ws' ? 'bg-[var(--brand-color)] text-black' : 'text-[var(--text-dim)] hover:text-white'}`}
             >
               WS_RELAY
             </button>
