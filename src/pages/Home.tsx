@@ -425,15 +425,19 @@ export function Home() {
         <div className="faq-grid flex flex-col gap-0 border-t border-[var(--border-color)]">
           <FAQItem
             question="What is XMR402 used for?"
-            answer="XMR402 is designed for high-frequency, low-friction micro-payments. Key use cases include pay-per-request API access, dynamic content gating, autonomous AI agent interactions, and decentralized service monetization without the need for traditional account systems."
+            answer="XMR402 is designed for high-frequency, low-friction micro-payments. With v2.0, it serves as a transport-agnostic primitive for pay-per-request API access, persistent P2P WebSocket stream gating, autonomous AI agent interactions, and decentralized service monetization."
           />
           <FAQItem
             question="Is XMR402 production ready?"
-            answer="The XMR402 v1.0.1 specification is finalized. Stable reference implementations are available in TypeScript, Go, and Rust. It is currently undergoing production-grade integration within the Ripley AI ecosystem and the Ghost Protocol."
+            answer="The XMR402 v2.0.0 specification is finalized. Stable reference implementations are being upgraded to the new decoupled (Core/HTTP/WS) architecture. It is currently the primary payment gating standard for the Ripley AI ecosystem."
           />
           <FAQItem
             question="How do I integrate XMR402?"
-            answer="Integration is straightforward. Developers can deploy the Ripley Guard middleware on the server-side to intercept requests and issue challenges. Clients must be configured to handle HTTP 402 responses by initiating the XMR402 deep-link protocol with a compatible wallet."
+            answer="Integration is flexible. Developers can deploy Ripley Guard as HTTP middleware (Hono/Express/Axum) or use the v2.0 WebSocket adapter for JSON-based P2P handshakes. Any client can then interact with the gate using standard headers or WebSocket frames."
+          />
+          <FAQItem
+            question="What is Payload Binding (HMAC)?"
+            answer="Payload Binding is a v2.0 security feature that cryptographically hashes the client's request intent (URL, Body, IP) into the payment challenge. This ensures that a payment for one specific instruction cannot be intercepted or recycled for a different, potentially more expensive task."
           />
           <FAQItem
             question="What blockchains does XMR402 support?"
