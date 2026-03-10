@@ -1,17 +1,35 @@
-import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, RefreshCw, Timer, Wifi, Send } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, RefreshCw, Timer, Wifi, Send, ChevronRight } from 'lucide-react';
 
 const WORKER_URL = "https://demo-api.xmr402.org";
 const WS_URL = "wss://demo-api.xmr402.org/relay";
 
+interface Frame {
+  type: 'in' | 'out';
+  data: any;
+}
+
+interface Challenge {
+  address: string;
+  amount: string;
+  message: string;
+}
+
+interface Intel {
+  status: string;
+  intel: string;
+  txid: string;
+}
+
 export const XMR402Demo: React.FC = () => {
   const [protocol, setProtocol] = useState<'http' | 'ws'>('http');
   const [stage, setStage] = useState<'idle' | 'challenging' | 'pending' | 'verifying' | 'authorized'>('idle');
-  const [challenge, setChallenge] = useState<any>(null);
-  const [intel, setIntel] = useState<any>(null);
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [intel, setIntel] = useState<Intel | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // WS specific state
-  const [wsFrames, setWsFrames] = useState<{ type: 'in' | 'out', data: any }[]>([]);
+  const [wsFrames, setWsFrames] = useState<Frame[]>([]);
   const wsRef = useRef<WebSocket | null>(null);
 
   // Manual form inputs
@@ -19,7 +37,7 @@ export const XMR402Demo: React.FC = () => {
   const [manualProof, setManualProof] = useState('');
 
   // Terminal detection state
-  // const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   // 5-minute expiry timer
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
@@ -88,13 +106,18 @@ export const XMR402Demo: React.FC = () => {
         const amountMatch = challengeHeader?.match(/amount="([^"]+)"/);
         const messageMatch = challengeHeader?.match(/message="([^"]+)"/);
 
-        setChallenge({
-          address: addressMatch?.[1],
-          amount: amountMatch?.[1],
-          message: messageMatch?.[1]
-        });
-        setTimeRemaining(300);
-        setStage('pending');
+        if (addressMatch?.[1] && amountMatch?.[1] && messageMatch?.[1]) {
+          setChallenge({
+              address: addressMatch[1],
+              amount: amountMatch[1],
+              message: messageMatch[1]
+            });
+          setTimeRemaining(300);
+          setStage('pending');
+        } else {
+          setError("Failed to parse challenge from server.");
+          setStage('idle');
+        }
       }
     } catch (err: any) {
       setError("Failed to connect to Shadow Archives node.");
@@ -170,7 +193,7 @@ export const XMR402Demo: React.FC = () => {
     setStage('verifying');
     setError(null);
 
-    if (protocol === 'ws' && wsRef.current?.readyState === WebSocket.OPEN) {
+    if (protocol === 'ws' && wsRef.current?.readyState === WebSocket.OPEN && challenge) {
       const proofFrame = {
         type: 'PAYMENT_PROOF',
         txid: manualTxid,
@@ -235,7 +258,7 @@ export const XMR402Demo: React.FC = () => {
               <Shield size={40} className="mx-auto opacity-20 mb-4 text-[var(--brand-color)]" />
               <h4 className="text-base sm:text-lg font-black uppercase italic mb-2 tracking-wider">Access_Gate_{protocol.toUpperCase()}</h4>
               <p className="text-[10px] sm:text-xs text-[var(--text-dim)] leading-relaxed uppercase">
-                {protocol === 'http'
+                {protocol === 'http' 
                   ? "Standard RESTful challenge. Rejects with 402 and requests IETF-standard fields."
                   : "Persistent P2P stream. Server challenges with a PAYMENT_CHALLENGE JSON frame."}
               </p>
@@ -263,7 +286,7 @@ export const XMR402Demo: React.FC = () => {
             {/* Protocol Animation */}
             {protocol === 'ws' && (
               <div className="bg-black/40 border border-white/5 p-4 rounded text-[9px] font-mono space-y-1 max-h-32 overflow-y-auto">
-                {wsFrames.map((f, i) => (
+                {wsFrames.map((f: Frame, i: number) => (
                   <div key={i} className={f.type === 'out' ? 'text-blue-400' : 'text-emerald-400'}>
                     {f.type === 'out' ? '>> SEND: ' : '<< RECV: '} {JSON.stringify(f.data)}
                   </div>
@@ -289,7 +312,7 @@ export const XMR402Demo: React.FC = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 border-t border-white/5 pt-4">
-                <label className="text-[9px] uppercase font-black text-[var(--text-dim)] tracking-widest">Target_Address</label>
+                <label className="text-[10px] uppercase font-black text-[var(--text-dim)] tracking-widest">Target_Address</label>
                 <div className="bg-black/20 border border-dashed border-[var(--border-color)] text-[var(--brand-color)] rounded break-all font-mono py-2 px-3 flex-1 text-xs text-center sm:text-left">
                   {challenge.address}
                 </div>
@@ -297,14 +320,14 @@ export const XMR402Demo: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-4 border-t border-white/5 pt-4">
                 <div>
-                  <label className="text-[9px] uppercase font-black text-[var(--text-dim)] block mb-1">Amount</label>
+                  <label className="text-[10px] uppercase font-black text-[var(--text-dim)] block mb-1">Amount</label>
                   <div className="text-lg font-black italic text-[var(--brand-color)]">
                     {(Number(challenge.amount) / 1e12).toFixed(6)} <span className="text-[10px] not-italic opacity-50">XMR</span>
                   </div>
                 </div>
                 <div className="overflow-hidden">
-                  <label className="text-[9px] uppercase font-black text-[var(--text-dim)] block mb-1">Nonce</label>
-                  <div className="text-[9px] font-mono text-[var(--text-dim)] bg-black/40 py-2 px-3 border border-white/5 truncate rounded">
+                  <label className="text-[10px] uppercase font-black text-[var(--text-dim)] block mb-1">Nonce</label>
+                  <div className="text-[10px] font-mono text-[var(--text-dim)] bg-black/40 py-2 px-3 border border-white/5 truncate rounded">
                     {challenge.message}
                   </div>
                 </div>
@@ -315,29 +338,34 @@ export const XMR402Demo: React.FC = () => {
               <div className="bg-white/5 border border-[var(--border-color)] p-6 rounded group cursor-pointer hover:border-emerald-500/50 transition-colors" onClick={authorizeWithRipley}>
                 <Zap size={20} className="text-[var(--brand-color)] mb-4" />
                 <h5 className="text-[10px] font-black uppercase tracking-widest mb-2">Automated_Ripley_Flow</h5>
-                <button className="w-full py-3 bg-[var(--brand-color)] text-black font-black uppercase tracking-widest text-[10px] hover:opacity-90">
-                  EXECUTE_UNION
+                <button className="w-full py-3 bg-[var(--brand-color)] text-black font-black uppercase tracking-widest text-[10px] hover:opacity-90 flex items-center justify-center gap-2">
+                  EXECUTE_UNION <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>
+                {showInstallPrompt && (
+                  <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-[9px] uppercase font-black">
+                    Terminal Not Detected. Download at kyc.rip/wallet
+                  </div>
+                )}
               </div>
 
               <div className="bg-white/5 border border-[var(--border-color)] p-6 rounded space-y-3">
-                <h5 className="text-[9px] font-black uppercase tracking-widest text-[var(--text-dim)]">Manual_Insertion</h5>
+                <h5 className="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Manual_Insertion</h5>
                 <input 
                   placeholder="TXID"
-                  value={manualTxid}
+                  value={manualTxid} 
                   onChange={(e) => setManualTxid(e.target.value)}
                   className="w-full bg-black/40 border border-white/10 text-[var(--brand-color)] font-mono text-[10px] py-2 px-3 outline-none focus:border-[var(--brand-color)]"
                 />
                 <input 
                   placeholder="PROOF"
-                  value={manualProof}
+                  value={manualProof} 
                   onChange={(e) => setManualProof(e.target.value)}
                   className="w-full bg-black/40 border border-white/10 text-[var(--brand-color)] font-mono text-[10px] py-2 px-3 outline-none focus:border-[var(--brand-color)]"
                 />
-                <button
+                <button 
                   onClick={verifyManual}
                   disabled={!manualTxid || !manualProof}
-                  className="w-full py-2 bg-[var(--bg-primary)] border border-white/10 text-[var(--brand-color)] text-[9px] font-black uppercase hover:border-[var(--brand-color)]"
+                  className="w-full py-2 bg-[var(--bg-primary)] border border-white/10 text-[var(--brand-color)] text-[10px] font-black uppercase hover:border-[var(--brand-color)] disabled:opacity-20"
                 >
                   VERIFY_PROOF
                 </button>
@@ -345,7 +373,7 @@ export const XMR402Demo: React.FC = () => {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 text-red-500 text-[9px] font-black uppercase italic animate-pulse">
+              <div className="flex items-center gap-2 text-red-500 text-[10px] font-black uppercase italic animate-pulse">
                 <AlertCircle size={12} /> {error}
               </div>
             )}
@@ -368,7 +396,7 @@ export const XMR402Demo: React.FC = () => {
                 <Unlock size={48} className="mx-auto text-[var(--brand-color)]" />
                 <h4 className="text-xl font-black uppercase italic tracking-[0.3em] text-[var(--brand-color)]">Uplink_Authorized</h4>
                 <div className="p-5 border border-[var(--border-color)] bg-[rgba(0,255,65,0.03)] text-left">
-                  <div className="text-xs text-[var(--brand-color)] leading-relaxed italic border-l-2 border-[var(--brand-color)] pl-4 py-2">
+                  <div className="text-sm text-[var(--brand-color)] leading-relaxed italic border-l-2 border-[var(--brand-color)] pl-4 py-2">
                     "{intel.intel}"
                   </div>
                 </div>
