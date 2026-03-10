@@ -58,10 +58,38 @@ When an agent hits a protected resource, the Guard intercepts it and returns an 
 The agent broadcasts the transaction, grabs the TX hash, and calls the local Monero wallet's `get_tx_proof`. It re-fires the identical HTTP request, packing the cryptographic credential into the `Authorization` header.
 
 ## 4. Transport Layer II: The Relay Flow
+Agents running locally without public IPs cannot receive HTTP callbacks. XMR402-WS solves this by passing JSON frames over persistent WebSocket connections. 
 
-Agents running locally without public IPs cannot receive HTTP callbacks. XMR402-WS solves this by passing JSON frames over persistent WebSocket connections.
+Instead of heavy smart contracts acting as middlemen, agents use simple messaging relays (like Nostr). The relay is just a dumb pipe. The validation happens entirely at the edge.
 
-Instead of heavy smart contracts, agents use simple messaging relays. The serving agent pushes a `PAYMENT_CHALLENGE` JSON frame. The requesting agent processes the payment locally and pushes the `PAYMENT_PROOF` frame back. The validation happens entirely at the edge. The relay stays dumb, fast, and free.
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Agent A (Requestor)
+    participant R as Relay (WebSocket/Nostr)
+    participant B as Agent B (Provider)
+    participant W as Local Wallet (RPC)
+
+    A->>R: Push Task Request (JSON)
+    R->>B: Route Task Request
+    
+    Note over B: Calculate stateless HMAC nonce
+    B->>R: Push PAYMENT_CHALLENGE (JSON)
+    R->>A: Route Challenge
+    
+    A->>W: Execute transfer & get_tx_proof(nonce)
+    W-->>A: Returns (txid, proof_signature)
+    
+    A->>R: Push PAYMENT_PROOF (JSON)
+    R->>B: Route Proof
+    
+    Note over B: Edge Verification: check_tx_proof<br/>Verify mempool TX & payload hash
+    B->>R: Push Task Result (JSON)
+    R->>A: Route Result
+
+```
+
+The serving agent (Agent B) pushes a `PAYMENT_CHALLENGE` JSON frame. The requesting agent (Agent A) processes the payment locally through its own node and pushes the `PAYMENT_PROOF` frame back. The relay stays dumb, fast, and free. No gas fees, no waiting for blocks.
 
 ## 5. Tactical Breakthroughs
 
