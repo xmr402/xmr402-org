@@ -60,7 +60,7 @@ const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
 }
 
 export function Home() {
-  const [activeFlow, setActiveFlow] = useState<'human' | 'agent'>('human')
+  const [activeFlow, setActiveFlow] = useState<'human' | 'agent' | 'relay'>('human')
   const [showDemoModal, setShowDemoModal] = useState(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -86,11 +86,11 @@ export function Home() {
     <>
       {/* HERO */}
       <header className="hero mt-16">
-        <div className="status-badge inline-flex!">PROTOCOL v{import.meta.env.VITE_PROTOCOL_VERSION || '1.0.1'} • IETF COMPLIANT</div>
+        <div className="status-badge inline-flex!">PROTOCOL v{import.meta.env.VITE_PROTOCOL_VERSION || '2.0.0'} • TRANSPORT AGNOSTIC</div>
         <h1>XMR402</h1>
-        <p className="subtitle">The Internet’s Sovereignty Layer for AI & Human Micro-transactions.</p>
+        <p className="subtitle">The Internet’s Sovereign Payment Primitive for Agents, APIs, & Relays.</p>
         <p className="max-w-2xl mx-auto mt-6 text-[var(--text-dim)] leading-relaxed">
-          XMR402 is an open, neutral standard for internet-native payments. It absolves the Internet's original sin by natively making payments possible between clients and servers, creating win-win economies that empower agentic payments at scale. XMR402 exists to build a more free and fair internet.
+          XMR402 is an open, neutral standard for internet-native payments. In v2.0, it evolves into a decoupled, transport-agnostic primitive. Whether you're gating REST APIs via HTTP 402 or streaming P2P JSON frames over WebSockets, XMR402 enables any client to buy network resources in milliseconds. 
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4">
           <button
@@ -136,24 +136,24 @@ export function Home() {
         <h2>Protocol Pillars</h2>
         <div className="advantages-grid">
           <div className="advantage-card border-l-2 border-amber-500">
-            <h3><Zap size={18} className="text-amber-500" /> <span>Zero protocol fees</span></h3>
-            <p>XMR402 is free for the customer and the merchant—just pay nominal payment network fees.</p>
+            <h3><Zap size={18} className="text-amber-500" /> <span>Transport Agnostic</span></h3>
+            <p>From IETF HTTP 402 Headers to persistent JSON WebSocket relays. Dumb pipes, smart cryptographic edges.</p>
           </div>
           <div className="advantage-card border-l-2 border-emerald-500">
-            <h3><ShieldCheck size={18} className="text-emerald-500" /> <span>Zero wait</span></h3>
-            <p>Money moves at the speed of the internet. 0-conf verification ensures instant resource access.</p>
+            <h3><ShieldCheck size={18} className="text-emerald-500" /> <span>Payload Binding</span></h3>
+            <p>Intent matters. Every payment is cryptographically HMAC-bound to the request payload to kill instruction-spoofing.</p>
           </div>
           <div className="advantage-card border-l-2 border-sky-500">
             <h3><UserCheck size={18} className="text-sky-500" /> <span>Zero friction</span></h3>
             <p>No accounts, no email, no personal information needed. Just a Monero wallet and a challenge.</p>
           </div>
           <div className="advantage-card border-l-2 border-purple-500">
-            <h3><Share2 size={18} className="text-purple-500" /> <span>Zero centralization</span></h3>
-            <p>Build on a neutral standard. Anyone can extend XMR402 without permission from a central entity.</p>
+            <h3><Share2 size={18} className="text-purple-500" /> <span>Absolute Speed</span></h3>
+            <p>Money moves at the speed of the internet. 0-conf verification ensures 200ms resource access.</p>
           </div>
           <div className="advantage-card border-l-2 border-rose-500">
-            <h3><GlobeLock size={18} className="text-rose-500" /> <span>Zero restrictions</span></h3>
-            <p>A global protocol for a borderless internet. No regional locks, no credit cards, no gatekeepers.</p>
+            <h3><GlobeLock size={18} className="text-rose-500" /> <span>Stateless Purity</span></h3>
+            <p>No databases. No polling. No wallet tracking bloat. XMR402 architecture relies purely on math and node RPCs.</p>
           </div>
         </div>
       </section>
@@ -188,7 +188,13 @@ export function Home() {
               className={activeFlow === 'agent' ? 'active' : ''}
               onClick={() => setActiveFlow('agent')}
             >
-              AGENT (Gateway)
+              AGENT (HTTP)
+            </button>
+            <button
+              className={activeFlow === 'relay' ? 'active' : ''}
+              onClick={() => setActiveFlow('relay')}
+            >
+              RELAY (WebSocket)
             </button>
           </div>
         </div>
@@ -233,7 +239,7 @@ export function Home() {
                 description="Server verifies 0-conf proof against its node and unlocks the resource in real-time."
               />
             </>
-          ) : (
+          ) : activeFlow === 'agent' ? (
             <>
               <ProtocolStep
                 number="01"
@@ -272,6 +278,45 @@ export function Home() {
                 description="Guard verifies proof instantly. Agent receives the resource data without human intervention."
               />
             </>
+            ) : (
+              <>
+                <ProtocolStep
+                  number="01"
+                  title="P2P Connection"
+                  actor="WS Client"
+                  description="Agent opens a persistent WebSocket connection to a Nostr relay or P2P host."
+                />
+                <ProtocolStep
+                  number="02"
+                  title="Resource Demand"
+                  actor="JSON Frame"
+                  description="Client pushes a JSON request frame to access a specific data stream."
+                />
+                <ProtocolStep
+                  number="03"
+                  title="Protocol Payload"
+                  actor="Edge Guard"
+                  description="Server pushes back a PAYMENT_CHALLENGE JSON frame containing the XMR402 specs."
+                />
+                <ProtocolStep
+                  number="04"
+                  title="Sovereign Execution"
+                  actor="XMR Gateway"
+                  description="Agent invokes local Ripley Gateway to execute transaction and generate proof."
+                />
+                <ProtocolStep
+                  number="05"
+                  title="Proof Submission"
+                  actor="JSON Frame"
+                  description="Agent pushes a PAYMENT_PROOF JSON frame containing the TXID and cryptographic signature."
+                />
+                <ProtocolStep
+                  number="06"
+                  title="Stream Unlocked"
+                  actor="Edge Router"
+                  description="Server verifies the proof statelessly and opens the data firehose on the current socket."
+                />
+              </>
           )}
         </div>
       </section>
