@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'wouter'
-import { ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, ExternalLink, Box, Cpu, Laptop, FileText, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, ExternalLink, Box, Cpu, Laptop, FileText, ChevronDown, ChevronUp } from 'lucide-react'
 import { XMR402Demo } from '../components/XMR402Demo'
 
 const ProtocolStep = ({ number, title, actor, description }: { number: string, title: string, actor: string, description: string }) => (
@@ -414,6 +414,56 @@ export function Home() {
               <a href="https://kyc.rip/wallet" target="_blank" rel="noopener noreferrer" className="impl-action">
                 LEARN MORE <ExternalLink size={14} />
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DEVELOPER SANDBOX */}
+      <section id="sandbox" className="mt-24">
+        <div className="border border-[var(--border-color)] bg-black/40 p-10 sm:p-16 rounded-lg text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+            <Terminal size={120} />
+          </div>
+          <h2 className="!mt-0 mb-6">Industrial Sandbox</h2>
+          <p className="max-w-xl mx-auto text-[var(--text-dim)] mb-10">
+            Rapidly verify your client implementation against our worldwide edge node. No signup, no keys—just tactical primitives.
+          </p>
+
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-black/60 p-2 border border-white/5 rounded">
+            <div className="px-6 py-3 font-mono text-[var(--brand-color)] text-sm sm:text-base select-all">
+              https://demo-api.xmr402.org
+            </div>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText("https://demo-api.xmr402.org");
+                const btn = document.getElementById('copy-sandbox-btn');
+                if (btn) btn.innerText = 'COPIED';
+                setTimeout(() => { if (btn) btn.innerText = 'COPY URL'; }, 2000);
+              }}
+              id="copy-sandbox-btn"
+              className="px-6 py-3 bg-[var(--brand-color)] text-black font-black uppercase text-xs tracking-widest hover:opacity-90 min-w-[120px]"
+            >
+              COPY URL
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 text-left">
+            <div className="space-y-2">
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">HTTP Gate</h4>
+              <div className="text-xs font-mono text-emerald-400">/intel</div>
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">WS Relay</h4>
+              <div className="text-xs font-mono text-emerald-400">/relay</div>
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">SDK (TS)</h4>
+              <a href="https://www.npmjs.com/package/@kyc-rip/ripley-guard-ts" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-emerald-400 border-b border-emerald-400/20 hover:border-emerald-400 cursor-pointer">@kyc-rip/ripley-guard-ts</a>
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">Environment</h4>
+              <div className="text-xs font-mono text-emerald-400">Mainnet (v2.0)</div>
             </div>
           </div>
         </div>
