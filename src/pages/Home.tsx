@@ -114,14 +114,6 @@ export function Home() {
             <Box size={18} />
             ECOSYSTEM
           </Link>
-          <a
-            href="https://x.com/xmr402"
-            target="_blank"
-            className="px-8 py-3 border border-[var(--border-color)] text-[var(--text-primary)] font-black uppercase text-sm tracking-widest hover:bg-[var(--brand-color)]/10 transition-all flex items-center justify-center gap-2 text-center"
-          >
-            <X size={18} />
-            FOLLOW X
-          </a>
         </div>
       </header>
 

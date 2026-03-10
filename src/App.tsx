@@ -1,10 +1,11 @@
 import { Route, Switch } from 'wouter'
-import { Sun, Moon, Monitor, Github, Twitter } from 'lucide-react'
+import { Sun, Moon, Monitor, Github } from 'lucide-react'
 import { useTheme } from './hooks/useTheme'
 import { Home } from './pages/Home'
 import { Ecosystem } from './pages/Ecosystem'
 import { Donate } from './pages/Donate'
 import './index.css'
+import { XLogo } from './components/XLogo'
 
 function App() {
   const { mode, cycleTheme } = useTheme()
@@ -15,7 +16,7 @@ function App() {
       {/* HEADER ACTIONS */}
       <div className="header-actions">
         <a href="https://x.com/xmr402" target="_blank" rel="noopener noreferrer" className="action-btn" title="X (Twitter)">
-          <Twitter size={20} />
+          <XLogo size={20} />
         </a>
         <a href="https://github.com/xmr402/XMR402-org" target="_blank" rel="noopener noreferrer" className="action-btn" title="GitHub Repository">
           <Github size={20} />
