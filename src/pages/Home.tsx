@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'wouter'
-import { ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, ExternalLink, Box, Cpu, Laptop, FileText, ChevronDown, ChevronUp } from 'lucide-react'
+import { ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, ExternalLink, Box, Cpu, Laptop, FileText, ChevronDown, ChevronUp, X } from 'lucide-react'
 import { XMR402Demo } from '../components/XMR402Demo'
 
 const ProtocolStep = ({ number, title, actor, description }: { number: string, title: string, actor: string, description: string }) => (
@@ -114,6 +114,14 @@ export function Home() {
             <Box size={18} />
             ECOSYSTEM
           </Link>
+          <a
+            href="https://x.com/xmr402"
+            target="_blank"
+            className="px-8 py-3 border border-[var(--border-color)] text-[var(--text-primary)] font-black uppercase text-sm tracking-widest hover:bg-[var(--brand-color)]/10 transition-all flex items-center justify-center gap-2 text-center"
+          >
+            <X size={18} />
+            FOLLOW X
+          </a>
         </div>
       </header>
 

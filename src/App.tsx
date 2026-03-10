@@ -1,5 +1,5 @@
 import { Route, Switch } from 'wouter'
-import { Sun, Moon, Monitor, Github } from 'lucide-react'
+import { Sun, Moon, Monitor, Github, Twitter } from 'lucide-react'
 import { useTheme } from './hooks/useTheme'
 import { Home } from './pages/Home'
 import { Ecosystem } from './pages/Ecosystem'
@@ -14,6 +14,9 @@ function App() {
     <div className="portal-container">
       {/* HEADER ACTIONS */}
       <div className="header-actions">
+        <a href="https://x.com/xmr402" target="_blank" rel="noopener noreferrer" className="action-btn" title="X (Twitter)">
+          <Twitter size={20} />
+        </a>
         <a href="https://github.com/xmr402/XMR402-org" target="_blank" rel="noopener noreferrer" className="action-btn" title="GitHub Repository">
           <Github size={20} />
         </a>
@@ -43,7 +46,7 @@ function App() {
       </Switch>
 
       <footer>
-        <p><a href="https://github.com/xmr402/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v1.0.1 • 2026</p>
+        <p><a href="https://x.com/xmr402" target="_blank text-emerald-500" className="text-emerald-500">@XMR402</a> • <a href="https://github.com/xmr402/XMR402-org" target="_blank">XMR402 REPO</a> • <a href="/donate">DONATE</a> • Standardized v2.0.0 • 2026</p>
       </footer>
     </div>
   )
