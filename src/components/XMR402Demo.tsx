@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, ChevronRight, RefreshCw, Layers, Cpu, Globe, Timer, Wifi, Send } from 'lucide-react';
+import { Shield, Zap, Terminal, Lock, Unlock, AlertCircle, RefreshCw, Timer, Wifi, Send } from 'lucide-react';
 
 const WORKER_URL = "https://demo-api.xmr402.org";
 const WS_URL = "wss://demo-api.xmr402.org/relay";
@@ -20,7 +19,7 @@ export const XMR402Demo: React.FC = () => {
   const [manualProof, setManualProof] = useState('');
 
   // Terminal detection state
-  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  // const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   // 5-minute expiry timer
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
