@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Github, Terminal, Zap, ShieldCheck, HeartHandshake, Wallet, Wrench, Globe, Twitter, Star } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const CategoryIconMap: Record<string, React.ReactNode> = {
   'guards': <ShieldCheck size={20} className="text-emerald-500" />,
@@ -36,6 +37,7 @@ interface EcosystemData {
 }
 
 function ProjectCard({ project, categoryName }: { project: Project; categoryName: string }) {
+  const { t } = useTranslation()
   return (
     <div key={project.id} className="bg-[var(--bg-panel)] border border-[var(--border-color)] border-t-[3px] border-t-[var(--text-primary)] p-0 hover:border-[var(--brand-color)] hover:border-t-[var(--brand-color)] transition-all flex flex-col h-full relative group shadow-sm bg-gradient-to-b from-[var(--bg-panel)] to-transparent">
       <div className="p-5 flex-grow">
@@ -88,12 +90,12 @@ function ProjectCard({ project, categoryName }: { project: Project; categoryName
       <div className="px-5 py-3 border-t border-[var(--border-color)] flex items-center justify-between bg-[var(--bg-primary)]/50">
         <div className="flex items-center gap-3">
           {project.url && (
-            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[var(--brand-color)] hover:opacity-80 transition-all p-1.5 border border-[var(--border-color)] hover:border-[var(--brand-color)] bg-[var(--bg-primary)] rounded-sm" title="Visit Website">
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-[var(--brand-color)] hover:opacity-80 transition-all p-1.5 border border-[var(--border-color)] hover:border-[var(--brand-color)] bg-[var(--bg-primary)] rounded-sm" title={t('ecosystem.visit_website')}>
               <Globe size={14} />
             </a>
           )}
           {project.github && project.github !== 'PENDING_PR' && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-[var(--text-dim)] hover:text-white transition-all p-1.5 border border-[var(--border-color)] hover:border-white bg-[var(--bg-primary)] rounded-sm" title="View Source">
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-[var(--text-dim)] hover:text-white transition-all p-1.5 border border-[var(--border-color)] hover:border-white bg-[var(--bg-primary)] rounded-sm" title={t('ecosystem.view_source')}>
               <Github size={14} />
             </a>
           )}
@@ -119,6 +121,7 @@ function ProjectCard({ project, categoryName }: { project: Project; categoryName
 }
 
 export function Ecosystem() {
+  const { t } = useTranslation()
   const [data, setData] = useState<EcosystemData | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeCategory, setActiveCategory] = useState<string>('all')
@@ -141,7 +144,7 @@ export function Ecosystem() {
       <div className="flex justify-center items-center py-32">
         <div className="animate-pulse flex items-center gap-2 text-[var(--text-dim)]">
           <Terminal size={18} />
-          <span>INITIALIZING DATALINK...</span>
+          <span>{t('ecosystem.loading')}</span>
         </div>
       </div>
     )
@@ -150,7 +153,7 @@ export function Ecosystem() {
   if (!data) {
     return (
       <div className="text-center py-32 text-rose-500 border border-rose-500/20 bg-rose-500/5 p-8 max-w-lg mx-auto">
-        CONNECTION FAILED: Unable to retrieve ecosystem state.
+        {t('ecosystem.error')}
       </div>
     )
   }
@@ -165,7 +168,7 @@ export function Ecosystem() {
       {/* SIDEBAR */}
       <aside className="w-full md:w-48 lg:w-56 md:sticky md:top-24 flex-shrink-0">
         <h1 className="text-3xl font-black tracking-tighter mb-8 px-2 text-[var(--text-primary)] uppercase">
-          Ecosystem
+          {t('ecosystem.title')}
         </h1>
 
         <nav className="flex flex-col gap-1">
@@ -174,7 +177,7 @@ export function Ecosystem() {
             className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-left ${activeCategory === 'all' ? 'bg-[var(--text-primary)]/5 text-[var(--text-primary)] font-bold' : 'text-[var(--text-dim)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel)]'}`}
           >
             <Box size={18} className={activeCategory === 'all' ? 'text-[var(--text-primary)]' : ''} />
-            <span>Everything</span>
+            <span>{t('ecosystem.filter_all')}</span>
           </button>
 
           <div className="my-2 border-t border-[var(--border-color)]"></div>
@@ -205,11 +208,11 @@ export function Ecosystem() {
             <div className="relative z-10 max-w-xl">
               <div className="status-badge inline-flex items-center gap-2 mb-4 text-[10px] font-mono bg-[var(--brand-color)]/10 text-[var(--brand-color)] px-2 py-1 border border-[var(--brand-color)]/20 rounded">
                 <Box size={10} className="translate-y-[-0.5px]" />
-                <span className="leading-none uppercase tracking-tighter">Protocol Ecosystem</span>
+                <span className="leading-none uppercase tracking-tighter">{t('ecosystem.hero_badge')}</span>
               </div>
-              <h2 className="text-3xl font-black mb-4 uppercase">The Builders</h2>
+              <h2 className="text-3xl font-black mb-4 uppercase">{t('ecosystem.hero_title')}</h2>
               <p className="text-[var(--text-dim)] leading-relaxed text-sm lg:text-base">
-                Discover innovative projects, tools, and applications built by our growing community of partners and developers leveraging XMR402 technology. The autonomous economy is here.
+                {t('ecosystem.hero_desc')}
               </p>
             </div>
           </div>
@@ -221,9 +224,9 @@ export function Ecosystem() {
               <div>
                 <h3 className="text-2xl font-black uppercase text-[var(--brand-color)] flex items-center gap-3 leading-tight">
                   <Star size={24} fill="var(--brand-color)" className="opacity-80" />
-                  Featured
+                  {t('ecosystem.featured')}
                 </h3>
-                <p className="text-[var(--text-dim)] text-sm mt-1">Stellar implementations pushing the XMR402 standard forward.</p>
+                <p className="text-[var(--text-dim)] text-sm mt-1">{t('ecosystem.featured_desc')}</p>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -256,8 +259,8 @@ export function Ecosystem() {
               {catProjects.length === 0 ? (
                 <div className="border border-dashed border-[var(--border-color)] rounded-xl py-12 px-6 text-center bg-[var(--bg-primary)]">
                   <Terminal size={32} className="mx-auto text-[var(--border-color)] mb-4" />
-                  <p className="text-[var(--text-dim)] font-mono text-sm uppercase tracking-wider">No active datalinks detected</p>
-                  <p className="text-[var(--text-dim)] text-xs mt-2 opacity-70">Be the first to deploy an implementation in this sector.</p>
+                  <p className="text-[var(--text-dim)] font-mono text-sm uppercase tracking-wider">{t('ecosystem.empty_title')}</p>
+                  <p className="text-[var(--text-dim)] text-xs mt-2 opacity-70">{t('ecosystem.empty_desc')}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -279,9 +282,9 @@ export function Ecosystem() {
           <section className="mt-24 pt-12 border-t border-dashed border-[var(--border-color)] text-center pb-8">
             <div className="max-w-xl mx-auto">
               <Github size={32} className="mx-auto text-[var(--text-dim)] mb-4 opacity-50" />
-              <h3 className="text-xl font-black mb-2 uppercase tracking-tight">Deploy to Ecosystem</h3>
+              <h3 className="text-xl font-black mb-2 uppercase tracking-tight">{t('ecosystem.cta_title')}</h3>
               <p className="text-[var(--text-dim)] mb-6 text-sm">
-                Built an XMR402 native app or skill? Add your project to this registry transparently through an open Pull Request.
+                {t('ecosystem.cta_desc')}
               </p>
               <a
                 href="https://github.com/xmr402/ecosystem/fork"
@@ -290,7 +293,7 @@ export function Ecosystem() {
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-[var(--text-primary)] text-[var(--bg-primary)] font-black uppercase text-xs tracking-widest hover:bg-[var(--brand-color)] hover:opacity-90 transition-all rounded-sm"
               >
                 <Terminal size={14} />
-                OPEN A PR
+                {t('ecosystem.cta_button')}
               </a>
             </div>
           </section>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'wouter'
 import { ShieldCheck, Zap, UserCheck, Share2, GlobeLock, Terminal, Copy, Check, ExternalLink, Box, Cpu, Laptop, FileText, ChevronDown, ChevronUp } from 'lucide-react'
+import { useTranslation, Trans } from 'react-i18next'
 import { XMR402Demo } from '../components/XMR402Demo'
 
 const ProtocolStep = ({ number, title, actor, description }: { number: string, title: string, actor: string, description: string }) => (
@@ -34,6 +35,7 @@ const FAQItem = ({ question, answer }: { question: string, answer: React.ReactNo
 
 const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
   const [copied, setCopied] = useState(false)
+  const { t } = useTranslation()
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code)
@@ -47,10 +49,10 @@ const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
       <button
         onClick={handleCopy}
         className={`copy-btn ${copied ? 'text-emerald-500' : ''}`}
-        title="Copy to clipboard"
+        title={t('home.copy_tooltip')}
       >
         {copied ? <Check size={16} /> : <Copy size={16} />}
-        {copied && <span className="text-[10px] ml-1 uppercase tracking-tighter">Copied</span>}
+        {copied && <span className="text-[10px] ml-1 uppercase tracking-tighter">{t('home.copied')}</span>}
       </button>
       <div className="code-scroll-container">
         <code>{code}</code>
@@ -60,6 +62,7 @@ const CodeBlock = ({ code, label }: { code: string, label?: string }) => {
 }
 
 export function Home() {
+  const { t } = useTranslation()
   const [activeFlow, setActiveFlow] = useState<'human' | 'agent' | 'relay'>('human')
   const [showDemoModal, setShowDemoModal] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -86,18 +89,18 @@ export function Home() {
     <>
       {/* HERO */}
       <header className="hero mt-16">
-        <div className="status-badge inline-flex!">PROTOCOL v{import.meta.env.VITE_PROTOCOL_VERSION || '2.0.0'} • TRANSPORT AGNOSTIC</div>
+        <div className="status-badge inline-flex!">{t('home.hero.badge', { version: import.meta.env.VITE_PROTOCOL_VERSION || '2.0.0' })}</div>
         <h1>XMR402</h1>
-        <p className="subtitle">The Internet’s Sovereign Payment Primitive for Agents, APIs, & Relays.</p>
+        <p className="subtitle">{t('home.hero.subtitle')}</p>
         <p className="max-w-2xl mx-auto mt-6 text-[var(--text-dim)] leading-relaxed">
-          XMR402 is an open, neutral standard for internet-native payments. In v2.0, it evolves into a decoupled, transport-agnostic primitive. Whether you're gating REST APIs via HTTP 402 or streaming P2P JSON frames over WebSockets, XMR402 enables any client to buy network resources in milliseconds. 
+          {t('home.hero.description')}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4">
           <button
             onClick={() => setShowDemoModal(true)}
             className="px-8 py-3 bg-[var(--brand-color)] text-black font-black uppercase text-sm tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
-            INTERACT WITH PROTOCOL
+            {t('home.hero.cta_interact')}
           </button>
           <a
             href="/XMR402_Whitepaper.pdf"
@@ -105,14 +108,14 @@ export function Home() {
             className="px-8 py-3 border border-[var(--border-color)] text-[var(--text-primary)] font-black uppercase text-sm tracking-widest hover:bg-[var(--brand-color)]/10 transition-all flex items-center justify-center gap-2 text-center"
           >
             <FileText size={18} />
-            WHITEPAPER
+            {t('home.hero.cta_whitepaper')}
           </a>
           <Link
             href="/ecosystem"
             className="px-8 py-3 border border-[var(--border-color)] text-[var(--text-primary)] font-black uppercase text-sm tracking-widest hover:bg-[var(--brand-color)]/10 transition-all flex items-center justify-center gap-2 text-center"
           >
             <Box size={18} />
-            ECOSYSTEM
+            {t('home.hero.cta_ecosystem')}
           </Link>
         </div>
       </header>
@@ -122,57 +125,57 @@ export function Home() {
         <div className="one-liner-box">
           <div className="one-liner-header">
             <Terminal size={20} />
-            <span>Accept payments with a single line of code</span>
+            <span>{t('home.oneliner.header')}</span>
           </div>
-          <CodeBlock code={oneLinerCode} label="With Ripley Guard" />
+          <CodeBlock code={oneLinerCode} label={t('home.oneliner.code_label')} />
           <div className="one-liner-footer">
-            That's it. Add one line of code to require payment for each incoming request. If a request arrives without payment, the server responds with HTTP 402, prompting the client to pay and retry.
+            {t('home.oneliner.footer')}
           </div>
         </div>
       </section>
 
       {/* INTRODUCTION */}
       <section id="introduction">
-        <h2>Protocol Pillars</h2>
+        <h2>{t('home.pillars.title')}</h2>
         <div className="advantages-grid">
           <div className="advantage-card border-l-2 border-amber-500">
-            <h3><Zap size={18} className="text-amber-500" /> <span>Transport Agnostic</span></h3>
-            <p>From IETF HTTP 402 Headers to persistent JSON WebSocket relays. Dumb pipes, smart cryptographic edges.</p>
+            <h3><Zap size={18} className="text-amber-500" /> <span>{t('home.pillars.transport_agnostic')}</span></h3>
+            <p>{t('home.pillars.transport_agnostic_desc')}</p>
           </div>
           <div className="advantage-card border-l-2 border-emerald-500">
-            <h3><ShieldCheck size={18} className="text-emerald-500" /> <span>Payload Binding</span></h3>
-            <p>Intent matters. Every payment is cryptographically HMAC-bound to the request payload to kill instruction-spoofing.</p>
+            <h3><ShieldCheck size={18} className="text-emerald-500" /> <span>{t('home.pillars.payload_binding')}</span></h3>
+            <p>{t('home.pillars.payload_binding_desc')}</p>
           </div>
           <div className="advantage-card border-l-2 border-sky-500">
-            <h3><UserCheck size={18} className="text-sky-500" /> <span>Zero friction</span></h3>
-            <p>No accounts, no email, no personal information needed. Just a Monero wallet and a challenge.</p>
+            <h3><UserCheck size={18} className="text-sky-500" /> <span>{t('home.pillars.zero_friction')}</span></h3>
+            <p>{t('home.pillars.zero_friction_desc')}</p>
           </div>
           <div className="advantage-card border-l-2 border-purple-500">
-            <h3><Share2 size={18} className="text-purple-500" /> <span>Absolute Speed</span></h3>
-            <p>Money moves at the speed of the internet. 0-conf verification ensures 200ms resource access.</p>
+            <h3><Share2 size={18} className="text-purple-500" /> <span>{t('home.pillars.absolute_speed')}</span></h3>
+            <p>{t('home.pillars.absolute_speed_desc')}</p>
           </div>
           <div className="advantage-card border-l-2 border-rose-500">
-            <h3><GlobeLock size={18} className="text-rose-500" /> <span>Stateless Purity</span></h3>
-            <p>No databases. No polling. No wallet tracking bloat. XMR402 architecture relies purely on math and node RPCs.</p>
+            <h3><GlobeLock size={18} className="text-rose-500" /> <span>{t('home.pillars.stateless_purity')}</span></h3>
+            <p>{t('home.pillars.stateless_purity_desc')}</p>
           </div>
           <div className="advantage-card border-l-2 border-emerald-500">
-            <h3><Zap size={18} className="text-emerald-500" /> <span>Zero protocol fees</span></h3>
-            <p>XMR402 is free for the customer and the merchant—just pay nominal network transaction fees.</p>
+            <h3><Zap size={18} className="text-emerald-500" /> <span>{t('home.pillars.zero_fees')}</span></h3>
+            <p>{t('home.pillars.zero_fees_desc')}</p>
           </div>
         </div>
       </section>
 
       {/* CODE DEMO */}
       <section id="demo">
-        <h2>Tactical Implementation</h2>
+        <h2>{t('home.tactical.title')}</h2>
         <div className="spec-preview">
-          <CodeBlock label="Standard 402 Response (Server-side)" code={server402Code} />
-          <CodeBlock label="Authorization Header (Client-side)" code={clientAuthCode} />
+          <CodeBlock label={t('home.tactical.server_label')} code={server402Code} />
+          <CodeBlock label={t('home.tactical.client_label')} code={clientAuthCode} />
         </div>
         <div className="spec-link-box" style={{ marginTop: '2rem' }}>
-          <p className="mb-4">It's how the internet should be: open, free, and effortless.</p>
+          <p className="mb-4">{t('home.tactical.spec_text')}</p>
           <a href="https://github.com/xmr402/XMR402-org/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">
-            READ THE FULL SPECIFICATION ON GITHUB
+            {t('home.tactical.spec_link')}
           </a>
         </div>
       </section>
@@ -180,25 +183,25 @@ export function Home() {
       {/* SEQUENCE FLOW */}
       <section id="flow">
         <div className="flow-header">
-          <h2>The Tactical Flow</h2>
+          <h2>{t('home.flow.title')}</h2>
           <div className="tab-switcher">
             <button
               className={activeFlow === 'human' ? 'active' : ''}
               onClick={() => setActiveFlow('human')}
             >
-              HUMAN (Terminal)
+              {t('home.flow.tab_human')}
             </button>
             <button
               className={activeFlow === 'agent' ? 'active' : ''}
               onClick={() => setActiveFlow('agent')}
             >
-              AGENT (HTTP)
+              {t('home.flow.tab_agent')}
             </button>
             <button
               className={activeFlow === 'relay' ? 'active' : ''}
               onClick={() => setActiveFlow('relay')}
             >
-              RELAY (WebSocket)
+              {t('home.flow.tab_relay')}
             </button>
           </div>
         </div>
@@ -206,120 +209,30 @@ export function Home() {
         <div className="flow-steps-container">
           {activeFlow === 'human' ? (
             <>
-              <ProtocolStep
-                number="01"
-                title="Resource Request"
-                actor="Web Browser"
-                description="User visits a paywalled page or triggers a protected API call."
-              />
-              <ProtocolStep
-                number="02"
-                title="Protocol Challenge"
-                actor="Server Guard"
-                description="Server rejects with 402 Payment Required + WWW-Authenticate: XMR402 challenge."
-              />
-              <ProtocolStep
-                number="03"
-                title="OS Deep-Link"
-                actor="Deep Link"
-                description="Browser catches the 402 response and triggers xmr402:// to wake up the local terminal."
-              />
-              <ProtocolStep
-                number="04"
-                title="Interactive Pay"
-                actor="Ripley Terminal"
-                description="Terminal displays a tactical modal. User clicks EXECUTE to sign and send XMR."
-              />
-              <ProtocolStep
-                number="05"
-                title="Submission"
-                actor="Authorization"
-                description="Terminal submits the TXID and TX-Proof back to the server via the return_url."
-              />
-              <ProtocolStep
-                number="06"
-                title="Instant Unlock"
-                actor="Unlocked"
-                description="Server verifies 0-conf proof against its node and unlocks the resource in real-time."
-              />
+              <ProtocolStep number="01" title={t('home.flow.human.s1_title')} actor={t('home.flow.human.s1_actor')} description={t('home.flow.human.s1_desc')} />
+              <ProtocolStep number="02" title={t('home.flow.human.s2_title')} actor={t('home.flow.human.s2_actor')} description={t('home.flow.human.s2_desc')} />
+              <ProtocolStep number="03" title={t('home.flow.human.s3_title')} actor={t('home.flow.human.s3_actor')} description={t('home.flow.human.s3_desc')} />
+              <ProtocolStep number="04" title={t('home.flow.human.s4_title')} actor={t('home.flow.human.s4_actor')} description={t('home.flow.human.s4_desc')} />
+              <ProtocolStep number="05" title={t('home.flow.human.s5_title')} actor={t('home.flow.human.s5_actor')} description={t('home.flow.human.s5_desc')} />
+              <ProtocolStep number="06" title={t('home.flow.human.s6_title')} actor={t('home.flow.human.s6_actor')} description={t('home.flow.human.s6_desc')} />
             </>
           ) : activeFlow === 'agent' ? (
             <>
-              <ProtocolStep
-                number="01"
-                title="Agent Request"
-                actor="AI Agent"
-                description="Agent script requests a protected API resource."
-              />
-              <ProtocolStep
-                number="02"
-                title="Dry Challenge"
-                actor="Server Guard"
-                description="Server issues a 402 Payment Required with the payment challenge payload."
-              />
-              <ProtocolStep
-                number="03"
-                title="Gateway Hook"
-                actor="XMR Gateway"
-                description="Agent pipes the challenge to its local Ripley XMR Gateway for processing."
-              />
-              <ProtocolStep
-                number="04"
-                title="Auto-Signature"
-                actor="Sovereign Node"
-                description="Gateway automatically creates a transaction and generates an IETF-compliant Authorization header."
-              />
-              <ProtocolStep
-                number="05"
-                title="Protocol Payload"
-                actor="Auth Header"
-                description="Agent re-submits the request with the Authorization: XMR402 header included."
-              />
-              <ProtocolStep
-                number="06"
-                title="Machine Unlock"
-                actor="Access API"
-                description="Guard verifies proof instantly. Agent receives the resource data without human intervention."
-              />
+              <ProtocolStep number="01" title={t('home.flow.agent.s1_title')} actor={t('home.flow.agent.s1_actor')} description={t('home.flow.agent.s1_desc')} />
+              <ProtocolStep number="02" title={t('home.flow.agent.s2_title')} actor={t('home.flow.agent.s2_actor')} description={t('home.flow.agent.s2_desc')} />
+              <ProtocolStep number="03" title={t('home.flow.agent.s3_title')} actor={t('home.flow.agent.s3_actor')} description={t('home.flow.agent.s3_desc')} />
+              <ProtocolStep number="04" title={t('home.flow.agent.s4_title')} actor={t('home.flow.agent.s4_actor')} description={t('home.flow.agent.s4_desc')} />
+              <ProtocolStep number="05" title={t('home.flow.agent.s5_title')} actor={t('home.flow.agent.s5_actor')} description={t('home.flow.agent.s5_desc')} />
+              <ProtocolStep number="06" title={t('home.flow.agent.s6_title')} actor={t('home.flow.agent.s6_actor')} description={t('home.flow.agent.s6_desc')} />
             </>
             ) : (
               <>
-                <ProtocolStep
-                  number="01"
-                  title="P2P Connection"
-                  actor="WS Client"
-                  description="Agent opens a persistent WebSocket connection to a Nostr relay or P2P host."
-                />
-                <ProtocolStep
-                  number="02"
-                  title="Resource Demand"
-                  actor="JSON Frame"
-                  description="Client pushes a JSON request frame to access a specific data stream."
-                />
-                <ProtocolStep
-                  number="03"
-                  title="Protocol Payload"
-                  actor="Edge Guard"
-                  description="Server pushes back a PAYMENT_CHALLENGE JSON frame containing the XMR402 specs."
-                />
-                <ProtocolStep
-                  number="04"
-                  title="Sovereign Execution"
-                  actor="XMR Gateway"
-                  description="Agent invokes local Ripley Gateway to execute transaction and generate proof."
-                />
-                <ProtocolStep
-                  number="05"
-                  title="Proof Submission"
-                  actor="JSON Frame"
-                  description="Agent pushes a PAYMENT_PROOF JSON frame containing the TXID and cryptographic signature."
-                />
-                <ProtocolStep
-                  number="06"
-                  title="Stream Unlocked"
-                  actor="Edge Router"
-                  description="Server verifies the proof statelessly and opens the data firehose on the current socket."
-                />
+                <ProtocolStep number="01" title={t('home.flow.relay.s1_title')} actor={t('home.flow.relay.s1_actor')} description={t('home.flow.relay.s1_desc')} />
+                <ProtocolStep number="02" title={t('home.flow.relay.s2_title')} actor={t('home.flow.relay.s2_actor')} description={t('home.flow.relay.s2_desc')} />
+                <ProtocolStep number="03" title={t('home.flow.relay.s3_title')} actor={t('home.flow.relay.s3_actor')} description={t('home.flow.relay.s3_desc')} />
+                <ProtocolStep number="04" title={t('home.flow.relay.s4_title')} actor={t('home.flow.relay.s4_actor')} description={t('home.flow.relay.s4_desc')} />
+                <ProtocolStep number="05" title={t('home.flow.relay.s5_title')} actor={t('home.flow.relay.s5_actor')} description={t('home.flow.relay.s5_desc')} />
+                <ProtocolStep number="06" title={t('home.flow.relay.s6_title')} actor={t('home.flow.relay.s6_actor')} description={t('home.flow.relay.s6_desc')} />
               </>
           )}
         </div>
@@ -327,41 +240,41 @@ export function Home() {
 
       {/* COMPARISONS */}
       <section id="comparisons">
-        <h2>Evolution of Payment</h2>
+        <h2>{t('home.comparison.title')}</h2>
         <div className="table-container">
           <table className="comparison-table">
             <thead>
               <tr>
-                <th>Feature</th>
-                <th>Legacy XMR Payment</th>
-                <th>XMR402 Standard</th>
+                <th>{t('home.comparison.col_feature')}</th>
+                <th>{t('home.comparison.col_legacy')}</th>
+                <th>{t('home.comparison.col_xmr402')}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="feature">Verification Speed</td>
-                <td>Minutes (Wait for block)</td>
-                <td>Seconds (0-conf TX Proof)</td>
+                <td className="feature">{t('home.comparison.speed')}</td>
+                <td>{t('home.comparison.speed_legacy')}</td>
+                <td>{t('home.comparison.speed_xmr402')}</td>
               </tr>
               <tr>
-                <td className="feature">Friction</td>
-                <td>Manual Address Copy-Paste</td>
-                <td>Zero-click Deep-link Union</td>
+                <td className="feature">{t('home.comparison.friction')}</td>
+                <td>{t('home.comparison.friction_legacy')}</td>
+                <td>{t('home.comparison.friction_xmr402')}</td>
               </tr>
               <tr>
-                <td className="feature">UI/UX</td>
-                <td>Polling / Refreshing</td>
-                <td>Real-time Gate Unlocking</td>
+                <td className="feature">{t('home.comparison.ux')}</td>
+                <td>{t('home.comparison.ux_legacy')}</td>
+                <td>{t('home.comparison.ux_xmr402')}</td>
               </tr>
               <tr>
-                <td className="feature">Agent Support</td>
-                <td>Impossible for AI</td>
-                <td>Native HTTP Standard</td>
+                <td className="feature">{t('home.comparison.agent')}</td>
+                <td>{t('home.comparison.agent_legacy')}</td>
+                <td>{t('home.comparison.agent_xmr402')}</td>
               </tr>
               <tr>
-                <td className="feature">Payload Security</td>
-                <td>Blind Payments</td>
-                <td>Instruction Binding (HMAC)</td>
+                <td className="feature">{t('home.comparison.security')}</td>
+                <td>{t('home.comparison.security_legacy')}</td>
+                <td>{t('home.comparison.security_xmr402')}</td>
               </tr>
             </tbody>
           </table>
@@ -370,7 +283,7 @@ export function Home() {
 
       {/* IMPLEMENTATIONS SHOWCASE */}
       <section id="implementations">
-        <h2>Reference Implementations</h2>
+        <h2>{t('home.implementations.title')}</h2>
         <div className="implementations-grid">
           <div className="impl-card border-t-2 border-emerald-500">
             <div className="impl-header">
@@ -380,9 +293,9 @@ export function Home() {
               <a href="https://kyc.rip/guard" target="_blank" rel="noopener noreferrer">
                 <h3>Ripley Guard</h3>
               </a>
-              <p>Industrial-grade middleware for Hono, Express, and standard HTTP servers.</p>
+              <p>{t('home.implementations.guard_desc')}</p>
               <a href="https://kyc.rip/guard" target="_blank" rel="noopener noreferrer" className="impl-action">
-                LEARN MORE <ExternalLink size={14} />
+                {t('home.implementations.learn_more')} <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -395,9 +308,9 @@ export function Home() {
               <a href="https://kyc.rip/ripley" target="_blank" rel="noopener noreferrer">
                 <h3>Ripley XMR Gateway</h3>
               </a>
-              <p>High-availability payment gateway for autonomous AI agent micro-transactions.</p>
+              <p>{t('home.implementations.gateway_desc')}</p>
               <a href="https://kyc.rip/ripley" target="_blank" rel="noopener noreferrer" className="impl-action">
-                LEARN MORE <ExternalLink size={14} />
+                {t('home.implementations.learn_more')} <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -410,9 +323,9 @@ export function Home() {
               <a href="https://kyc.rip/wallet" target="_blank" rel="noopener noreferrer">
                 <h3>Ripley Terminal</h3>
               </a>
-              <p>Tactical desktop terminal for sovereign identity and deep-link payment unions.</p>
+              <p>{t('home.implementations.terminal_desc')}</p>
               <a href="https://kyc.rip/wallet" target="_blank" rel="noopener noreferrer" className="impl-action">
-                LEARN MORE <ExternalLink size={14} />
+                {t('home.implementations.learn_more')} <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -421,16 +334,16 @@ export function Home() {
 
       {/* DEVELOPER SANDBOX */}
       <section id="sandbox" className="mt-24">
-        <div className="border border-[var(--border-color)] bg-black/40 p-10 sm:p-16 rounded-lg text-center relative overflow-hidden">
+        <div className="border border-[var(--border-color)] bg-[var(--bg-panel)] p-10 sm:p-16 rounded-lg text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
             <Terminal size={120} />
           </div>
-          <h2 className="!mt-0 mb-6">Industrial Sandbox</h2>
+          <h2 className="!mt-0 mb-6">{t('home.sandbox.title')}</h2>
           <p className="max-w-xl mx-auto text-[var(--text-dim)] mb-10">
-            Rapidly verify your client implementation against our worldwide edge node. No signup, no keys—just tactical primitives.
+            {t('home.sandbox.description')}
           </p>
 
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-black/60 p-2 border border-white/5 rounded">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-[var(--bg-code)] p-2 border border-[var(--border-color)] rounded">
             <div className="px-6 py-3 font-mono text-[var(--brand-color)] text-sm sm:text-base select-all">
               https://demo-api.xmr402.org
             </div>
@@ -438,32 +351,32 @@ export function Home() {
               onClick={() => {
                 navigator.clipboard.writeText("https://demo-api.xmr402.org");
                 const btn = document.getElementById('copy-sandbox-btn');
-                if (btn) btn.innerText = 'COPIED';
-                setTimeout(() => { if (btn) btn.innerText = 'COPY URL'; }, 2000);
+                if (btn) btn.innerText = t('home.sandbox.copied');
+                setTimeout(() => { if (btn) btn.innerText = t('home.sandbox.copy_url'); }, 2000);
               }}
               id="copy-sandbox-btn"
-              className="px-6 py-3 bg-[var(--brand-color)] text-black font-black uppercase text-xs tracking-widest hover:opacity-90 min-w-[120px]"
+              className="px-6 py-3 bg-[var(--brand-color)] text-[var(--bg-primary)] font-black uppercase text-xs tracking-widest hover:opacity-90 min-w-[120px]"
             >
-              COPY URL
+              {t('home.sandbox.copy_url')}
             </button>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 text-left">
             <div className="space-y-2">
-              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">HTTP Gate</h4>
-              <div className="text-xs font-mono text-emerald-400">/intel</div>
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">{t('home.sandbox.http_gate')}</h4>
+              <div className="text-xs font-mono text-[var(--brand-color)]">/intel</div>
             </div>
             <div className="space-y-2">
-              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">WS Relay</h4>
-              <div className="text-xs font-mono text-emerald-400">/relay</div>
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">{t('home.sandbox.ws_relay')}</h4>
+              <div className="text-xs font-mono text-[var(--brand-color)]">/relay</div>
             </div>
             <div className="space-y-2">
-              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">SDK (TS)</h4>
-              <a href="https://www.npmjs.com/package/@kyc-rip/ripley-guard-ts" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-emerald-400 border-b border-emerald-400/20 hover:border-emerald-400 cursor-pointer">@kyc-rip/ripley-guard-ts</a>
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">{t('home.sandbox.sdk_ts')}</h4>
+              <a href="https://www.npmjs.com/package/@kyc-rip/ripley-guard-ts" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-[var(--brand-color)] border-b border-[var(--brand-color)]/20 hover:border-[var(--brand-color)] cursor-pointer">@kyc-rip/ripley-guard-ts</a>
             </div>
             <div className="space-y-2">
-              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">Environment</h4>
-              <div className="text-xs font-mono text-emerald-400">Mainnet (v2.0)</div>
+              <h4 className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest font-black">{t('home.sandbox.environment')}</h4>
+              <div className="text-xs font-mono text-[var(--brand-color)]">{t('home.sandbox.env_value')}</div>
             </div>
           </div>
         </div>
@@ -471,40 +384,20 @@ export function Home() {
 
       {/* FAQ */}
       <section id="faq">
-        <h2>Frequently Asked Questions</h2>
+        <h2>{t('home.faq.title')}</h2>
         <div className="faq-grid flex flex-col gap-0 border-t border-[var(--border-color)]">
+          <FAQItem question={t('home.faq.q1')} answer={t('home.faq.a1')} />
+          <FAQItem question={t('home.faq.q2')} answer={t('home.faq.a2')} />
+          <FAQItem question={t('home.faq.q3')} answer={t('home.faq.a3')} />
+          <FAQItem question={t('home.faq.q4')} answer={t('home.faq.a4')} />
           <FAQItem
-            question="What is XMR402 used for?"
-            answer="XMR402 is designed for high-frequency, low-friction micro-payments. With v2.0, it serves as a transport-agnostic primitive for pay-per-request API access, persistent P2P WebSocket stream gating, autonomous AI agent interactions, and decentralized service monetization."
-          />
-          <FAQItem
-            question="Is XMR402 production ready?"
-            answer="The XMR402 v2.0.0 specification is finalized. Stable reference implementations are being upgraded to the new decoupled (Core/HTTP/WS) architecture. It is currently the primary payment gating standard for the Ripley AI ecosystem."
-          />
-          <FAQItem
-            question="How do I integrate XMR402?"
-            answer="Integration is flexible. Developers can deploy Ripley Guard as HTTP middleware (Hono/Express/Axum) or use the v2.0 WebSocket adapter for JSON-based P2P handshakes. Any client can then interact with the gate using standard headers or WebSocket frames."
-          />
-          <FAQItem
-            question="What is Payload Binding (HMAC)?"
-            answer="Payload Binding is a v2.0 security feature that cryptographically hashes the client's request intent (URL, Body, IP) into the payment challenge. This ensures that a payment for one specific instruction cannot be intercepted or recycled for a different, potentially more expensive task."
-          />
-          <FAQItem
-            question="What blockchains does XMR402 support?"
+            question={t('home.faq.q5')}
             answer={
-              <>
-                While the XMR402 standard is blockchain-agnostic, it prioritizes <strong>Monero (XMR)</strong> due to its superior privacy primitives and native transaction proof capabilities. Compatibility with other privacy-preserving networks is currently under research.
-              </>
+              <Trans i18nKey="home.faq.a5" components={{ 1: <strong /> }} />
             }
           />
-          <FAQItem
-            question="Is 0-conf safe from double-spend attacks?"
-            answer="XMR402 relies on 0-confirmation (mempool) transactions to ensure the zero-latency access required by AI agents and active API streams. While 0-conf carries a theoretical risk of double-spending or chain reorgs, the economic incentive to attack a micro-payment (e.g., $0.005) is vastly outweighed by the cost and difficulty of the attack. XMR402 is strictly optimized for high-frequency, low-value digital interactions where this tactical trade-off is mathematically sound."
-          />
-          <FAQItem
-            question="Does it require a special wallet?"
-            answer="XMR402 is compatible with any wallet that supports the Monero Transaction Proof (TX Proof) standard. For the most seamless and tactical experience, we recommend using the Ripley Terminal."
-          />
+          <FAQItem question={t('home.faq.q6')} answer={t('home.faq.a6')} />
+          <FAQItem question={t('home.faq.q7')} answer={t('home.faq.a7')} />
         </div>
       </section>
 

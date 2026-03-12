@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Copy, Check } from 'lucide-react'
+import { useTranslation, Trans } from 'react-i18next'
 import QRCode from 'react-qr-code'
 
 export function Donate() {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const [xmrAddress, setXmrAddress] = useState<string>('82txTMTFiXihfBeJL5E6keb1p8pzGhdAMb1u6dwnCu66hBgP8orJSKAMuAMjg5HkaTaSTRUVDHo67WAv3FFjt4CW73b8scF') // Fallback
   const openAlias = 'donate.xmr402.org'
@@ -28,19 +30,19 @@ export function Donate() {
 
   return (
     <div className="donate-page animate-fade-in text-left max-w-3xl mx-auto px-4 mt-8 pb-16">
-      <h1 className="text-4xl font-black mb-6 tracking-tight text-[var(--text-primary)]">Donate to the Ecosystem</h1>
+      <h1 className="text-4xl font-black mb-6 tracking-tight text-[var(--text-primary)]">{t('donate.title')}</h1>
       <p className="text-[var(--text-dim)] mb-10 leading-relaxed text-lg">
-        Donations to the general fund are used to support XMR402 protocol development, ecosystem expansion, and public RPC infrastructure. Infrastructure costs are currently covered by core sponsors.
+        {t('donate.description')}
       </p>
 
-      <h2 className="text-2xl font-bold mb-6 border-b border-[var(--border-color)] pb-3 text-[var(--text-primary)]">General Fund</h2>
-      <p className="mb-6 text-[var(--text-dim)]">You can donate Monero directly to the core development pool:</p>
+      <h2 className="text-2xl font-bold mb-6 border-b border-[var(--border-color)] pb-3 text-[var(--text-primary)]">{t('donate.general_fund')}</h2>
+      <p className="mb-6 text-[var(--text-dim)]">{t('donate.general_fund_desc')}</p>
 
-      <p className="mb-2 font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">Monero:</p>
+      <p className="mb-2 font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">{t('donate.monero_label')}</p>
       <div
         className="flex mb-6 cursor-pointer group"
         onClick={() => { navigator.clipboard.writeText(xmrAddress); copyToClipboard(); }}
-        title="Click to copy"
+        title={t('donate.click_to_copy')}
       >
         <code className="bg-[var(--bg-code)] border border-[var(--border-color)] p-4 rounded font-mono break-all text-[14px] leading-relaxed text-[var(--brand-color)] flex-1 relative transition-all group-hover:border-[var(--brand-color)] shadow-sm">
           {xmrAddress}
@@ -51,7 +53,7 @@ export function Donate() {
       </div>
 
       <p className="mb-10 text-[var(--text-dim)] flex items-center flex-wrap gap-2">
-        <span className="font-bold text-sm tracking-widest uppercase">openalias:</span>
+        <span className="font-bold text-sm tracking-widest uppercase">{t('donate.openalias_label')}</span>
         <code className="bg-[var(--bg-code)] border border-[var(--border-color)] px-3 py-1.5 rounded font-mono text-[var(--brand-color)]">{openAlias}</code>
       </p>
 
@@ -72,21 +74,21 @@ export function Donate() {
               </div>
             </div>
           </div>
-          <div className="mt-4 text-xs font-black uppercase tracking-widest text-[var(--text-dim)]">Scan Monero QR</div>
+          <div className="mt-4 text-xs font-black uppercase tracking-widest text-[var(--text-dim)]">{t('donate.scan_qr')}</div>
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6 border-b border-[var(--border-color)] pb-3 text-[var(--text-primary)]">Support the developers</h2>
+      <h2 className="text-2xl font-bold mb-6 border-b border-[var(--border-color)] pb-3 text-[var(--text-primary)]">{t('donate.support_devs')}</h2>
       <p className="text-[var(--text-dim)] leading-relaxed mb-6 text-lg">
-        The developers working on XMR402 are independent cypherpunks and researchers. By donating XMR, you are directly funding the open-source sovereignty layer for the AI and machine-to-machine economy.
+        {t('donate.support_devs_desc')}
       </p>
       <p className="text-[var(--text-dim)] leading-relaxed mb-6 text-lg">
-        If you wish to support specific builders in the ecosystem (wallets, gateways, skills), consider using their individual donation links found on the <a href="/ecosystem" className="text-[var(--brand-color)] hover:underline font-bold">Ecosystem Directory</a>.
+        <Trans i18nKey="donate.support_builders" components={{ 1: <a href="/ecosystem" className="text-[var(--brand-color)] hover:underline font-bold" /> }} />
       </p>
 
       <div className="mt-20 border-t border-[var(--border-color)] pt-8">
         <a href="https://xmr402.org" className="text-[var(--text-dim)] hover:text-[var(--brand-color)] transition-colors font-bold tracking-widest uppercase text-xs flex items-center gap-2 w-fit">
-          <span>←</span> Back to Protocol Base
+          <span>&larr;</span> {t('donate.back_link')}
         </a>
       </div>
     </div>

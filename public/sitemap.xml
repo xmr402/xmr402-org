@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- English (default / bare paths) -->
+  <url>
+    <loc>https://xmr402.org/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/ecosystem" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/donate" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/donate" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/donate" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/donate" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/donate" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/donate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
+  </url>
+
+  <!-- Traditional Chinese -->
+  <url>
+    <loc>https://xmr402.org/zh-TW</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/zh-TW/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/ecosystem" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/zh-TW/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/donate" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/donate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
+  </url>
+
+  <!-- Russian -->
+  <url>
+    <loc>https://xmr402.org/ru</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/ru/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/ecosystem" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/ru/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/donate" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/donate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
+  </url>
+
+  <!-- Spanish -->
+  <url>
+    <loc>https://xmr402.org/es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/es/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/ecosystem" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/es/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/donate" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/donate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
+  </url>
+
+  <!-- Portuguese -->
+  <url>
+    <loc>https://xmr402.org/pt</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/pt/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/ecosystem" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/pt/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/donate" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/donate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
+  </url>
+
+  <!-- Japanese -->
+  <url>
+    <loc>https://xmr402.org/ja</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/ja/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/ecosystem" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/ecosystem" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/ja/donate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/donate" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/donate" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
+  </url>
+
+</urlset>
