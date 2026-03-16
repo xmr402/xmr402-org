@@ -55,7 +55,7 @@ export function BlogPost() {
   useSEO({
     title: post ? `${title} | XMR402 Blog` : 'Blog | XMR402',
     description: description || 'XMR402 Blog',
-    ogImage: post?.ogImage,
+    ogImage: post?.coverImage || post?.ogImage,
     ogType: 'article',
     canonicalUrl: post ? `https://xmr402.org/blog/${post.slug}` : undefined,
     jsonLd: post
