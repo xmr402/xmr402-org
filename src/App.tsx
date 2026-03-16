@@ -1,10 +1,12 @@
-import { Route, Switch } from 'wouter'
-import { Sun, Moon, Monitor, Github } from 'lucide-react'
+import { Route, Switch, Link } from 'wouter'
+import { Sun, Moon, Monitor, Github, BookOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from './hooks/useTheme'
 import { Home } from './pages/Home'
 import { Ecosystem } from './pages/Ecosystem'
 import { Donate } from './pages/Donate'
+import { Blog } from './pages/Blog'
+import { BlogPost } from './pages/BlogPost'
 import { LangRouter } from './i18n/LangRouter'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import './index.css'
@@ -21,6 +23,9 @@ function App() {
         {/* HEADER ACTIONS */}
         <div className="header-actions">
           <LanguageSwitcher />
+          <Link href="/blog" className="action-btn" title={t('app.title_blog')}>
+            <BookOpen size={20} />
+          </Link>
           <a href="https://x.com/xmr402" target="_blank" rel="noopener noreferrer" className="action-btn" title={t('app.title_twitter')}>
             <XLogo size={20} />
           </a>
@@ -43,6 +48,8 @@ function App() {
           )}
           <Route path="/donate" component={Donate} />
           <Route path="/ecosystem" component={Ecosystem} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/blog/:slug" component={BlogPost} />
           <Route>
             {/* 404 Fallback */}
             <div className="text-center py-32">
@@ -53,7 +60,7 @@ function App() {
         </Switch>
 
         <footer>
-          <p><a href="https://x.com/xmr402" target="_blank" className="text-emerald-500">@XMR402</a> • <a href="https://github.com/xmr402/XMR402-org" target="_blank">{t('app.footer_repo')}</a> • <a href="/donate">{t('app.footer_donate')}</a> • {t('app.footer_version')} • 2026</p>
+          <p><a href="https://x.com/xmr402" target="_blank" className="text-emerald-500">@XMR402</a> • <a href="https://github.com/xmr402/XMR402-org" target="_blank">{t('app.footer_repo')}</a> • <Link href="/blog">{t('app.footer_blog')}</Link> • <a href="/donate">{t('app.footer_donate')}</a> • {t('app.footer_version')} • 2026</p>
         </footer>
       </div>
     </LangRouter>

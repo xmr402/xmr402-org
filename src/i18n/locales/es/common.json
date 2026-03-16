@@ -6,7 +6,20 @@
     "404_link": "VOLVER A LA BASE",
     "footer_repo": "REPO XMR402",
     "footer_donate": "DONAR",
+    "footer_blog": "BLOG",
+    "title_blog": "Blog",
     "footer_version": "Estandarizado v2.0.0"
+  },
+  "blog": {
+    "badge": "Transmisiones",
+    "title": "Blog",
+    "subtitle": "Últimas noticias, guías e insights sobre XMR402, HTTP 402 y la economía de agentes.",
+    "loading": "CARGANDO TRANSMISIONES...",
+    "error": "SEÑAL PERDIDA: No se pudieron obtener las publicaciones del blog.",
+    "empty": "Aún no hay transmisiones. Vuelve pronto.",
+    "read_more": "LEER MÁS",
+    "back_to_blog": "Volver a Todas las Publicaciones",
+    "not_found": "Esta transmisión no se encontró."
   },
   "home": {
     "hero": {

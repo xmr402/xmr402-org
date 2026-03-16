@@ -6,7 +6,20 @@
     "404_link": "RETURN TO BASE",
     "footer_repo": "XMR402 REPO",
     "footer_donate": "DONATE",
+    "footer_blog": "BLOG",
+    "title_blog": "Blog",
     "footer_version": "Standardized v2.0.0"
+  },
+  "blog": {
+    "badge": "Transmissions",
+    "title": "Blog",
+    "subtitle": "Latest news, guides, and insights about XMR402, HTTP 402, and the agentic economy.",
+    "loading": "LOADING TRANSMISSIONS...",
+    "error": "SIGNAL LOST: Unable to retrieve blog posts.",
+    "empty": "No transmissions yet. Check back soon.",
+    "read_more": "READ MORE",
+    "back_to_blog": "Back to All Posts",
+    "not_found": "This transmission could not be found."
   },
   "home": {
     "hero": {

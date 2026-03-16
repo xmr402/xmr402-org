@@ -34,6 +34,38 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/donate" />
   </url>
 
+  <!-- Blog -->
+  <url>
+    <loc>https://xmr402.org/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/blog" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/blog" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/blog" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/blog" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/blog" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/blog" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/blog/what-is-x402-xmr402</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/blog/what-is-x402-xmr402" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/blog/what-is-x402-xmr402" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/blog/what-is-x402-xmr402" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/blog/what-is-x402-xmr402" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/blog/what-is-x402-xmr402" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/blog/what-is-x402-xmr402" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/blog/what-is-x402-xmr402" />
+  </url>
+  <url>
+    <loc>https://xmr402.org/blog/agentic-economy-ai-payments</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xmr402.org/blog/agentic-economy-ai-payments" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://xmr402.org/zh-TW/blog/agentic-economy-ai-payments" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://xmr402.org/ru/blog/agentic-economy-ai-payments" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://xmr402.org/es/blog/agentic-economy-ai-payments" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://xmr402.org/pt/blog/agentic-economy-ai-payments" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://xmr402.org/ja/blog/agentic-economy-ai-payments" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xmr402.org/blog/agentic-economy-ai-payments" />
+  </url>
+
   <!-- Traditional Chinese -->
   <url>
     <loc>https://xmr402.org/zh-TW</loc>

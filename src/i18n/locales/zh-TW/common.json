@@ -6,7 +6,20 @@
     "404_link": "返回基地",
     "footer_repo": "XMR402 儲存庫",
     "footer_donate": "捐贈",
+    "footer_blog": "部落格",
+    "title_blog": "部落格",
     "footer_version": "標準化 v2.0.0"
+  },
+  "blog": {
+    "badge": "傳輸訊號",
+    "title": "部落格",
+    "subtitle": "關於 XMR402、HTTP 402 和代理經濟的最新消息、指南和深度洞察。",
+    "loading": "正在載入傳輸訊號...",
+    "error": "訊號丟失：無法取得部落格文章。",
+    "empty": "尚無傳輸訊號。請稍後再來。",
+    "read_more": "閱讀更多",
+    "back_to_blog": "返回所有文章",
+    "not_found": "找不到此傳輸訊號。"
   },
   "home": {
     "hero": {
