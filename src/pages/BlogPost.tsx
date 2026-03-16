@@ -26,32 +26,18 @@ interface BlogPostData {
 }
 
 const markdownComponents: Components = {
-  code({ className, children, ...props }) {
-    const match = /language-(\w+)/.exec(className || '')
-    const lang = match?.[1]
-    const text = String(children).replace(/\n$/, '')
-
-    if (lang === 'mermaid') {
+  pre({ children, ...props }) {
+    // Check if the child is a mermaid code block
+    const child = children as React.ReactElement<{ className?: string; children?: React.ReactNode }>
+    if (child?.props?.className === 'language-mermaid') {
+      const text = String(child.props.children).replace(/\n$/, '')
       return (
         <Suspense fallback={<pre><code>{text}</code></pre>}>
           <MermaidBlock chart={text} />
         </Suspense>
       )
     }
-
-    // Inline code (no language class) vs block code
-    if (!className) {
-      return <code {...props}>{children}</code>
-    }
-
-    return (
-      <code className={className} {...props}>
-        {children}
-      </code>
-    )
-  },
-  pre({ children }) {
-    return <pre>{children}</pre>
+    return <pre {...props}>{children}</pre>
   },
 }
 
