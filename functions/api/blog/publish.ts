@@ -25,6 +25,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     date: post.date,
     tags: post.tags,
     ogImage: post.ogImage,
+    coverImage: post.coverImage,
     updatedAt: post.updatedAt,
   };
   const existingIdx = currentIndex.findIndex((p) => p.slug === post.slug);

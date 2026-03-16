@@ -19,7 +19,9 @@
     "empty": "No transmissions yet. Check back soon.",
     "read_more": "READ MORE",
     "back_to_blog": "Back to All Posts",
-    "not_found": "This transmission could not be found."
+    "not_found": "This transmission could not be found.",
+    "prev": "Prev",
+    "next": "Next"
   },
   "home": {
     "hero": {

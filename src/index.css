@@ -720,6 +720,18 @@ section h2::after {
   font-weight: 700;
 }
 
+.blog-content .mermaid-chart {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1.5rem;
+}
+
+.blog-content .mermaid-chart svg {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Footer */
 footer {
   text-align: center;

@@ -6,6 +6,7 @@ export interface BlogPostMeta {
   date: string;
   tags: string[];
   ogImage: string;
+  coverImage?: string;
   updatedAt?: string;
 }
 

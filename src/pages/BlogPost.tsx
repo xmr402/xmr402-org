@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { useRoute, Link } from 'wouter'
 import { Terminal, Calendar, Tag, ArrowLeft } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import type { Components } from 'react-markdown'
+
+const MermaidBlock = lazy(() =>
+  import('../components/MermaidBlock').then((m) => ({ default: m.MermaidBlock }))
+)
 import { getLocalizedContent } from '../utils/i18n-content'
 import { useSEO } from '../hooks/useSEO'
 
@@ -16,7 +21,38 @@ interface BlogPostData {
   date: string
   tags: string[]
   ogImage: string
+  coverImage?: string
   updatedAt?: string
+}
+
+const markdownComponents: Components = {
+  code({ className, children, ...props }) {
+    const match = /language-(\w+)/.exec(className || '')
+    const lang = match?.[1]
+    const text = String(children).replace(/\n$/, '')
+
+    if (lang === 'mermaid') {
+      return (
+        <Suspense fallback={<pre><code>{text}</code></pre>}>
+          <MermaidBlock chart={text} />
+        </Suspense>
+      )
+    }
+
+    // Inline code (no language class) vs block code
+    if (!className) {
+      return <code {...props}>{children}</code>
+    }
+
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    )
+  },
+  pre({ children }) {
+    return <pre>{children}</pre>
+  },
 }
 
 export function BlogPost() {
@@ -42,7 +78,7 @@ export function BlogPost() {
           '@type': 'BlogPosting',
           headline: title,
           description: description,
-          image: post.ogImage,
+          image: post.coverImage || post.ogImage,
           datePublished: post.date,
           dateModified: post.updatedAt ?? post.date,
           author: { '@type': 'Person', name: post.author },
@@ -107,6 +143,17 @@ export function BlogPost() {
         {t('blog.back_to_blog')}
       </Link>
 
+      {/* COVER IMAGE */}
+      {post.coverImage && (
+        <div className="w-full rounded-lg overflow-hidden mb-8 border border-[var(--border-color)]">
+          <img
+            src={post.coverImage}
+            alt={title}
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      )}
+
       {/* POST HEADER */}
       <header className="mb-10 pb-8 border-b border-[var(--border-color)]">
         <div className="flex items-center gap-4 mb-4 text-[10px] uppercase tracking-widest text-[var(--text-dim)] font-mono">
@@ -145,7 +192,9 @@ export function BlogPost() {
 
       {/* POST CONTENT */}
       <article className="blog-content">
-        <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+        <Markdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+          {content}
+        </Markdown>
       </article>
 
       {/* FOOTER */}

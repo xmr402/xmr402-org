@@ -11,6 +11,7 @@ interface BlogPost {
   date: string;
   tags: string[];
   ogImage: string;
+  coverImage?: string;
 }
 
 interface BlogPostMeta {
@@ -55,7 +56,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
     const title = escapeHtml(post.title[lang] ?? post.title.en);
     const desc = escapeHtml(post.description[lang] ?? post.description.en);
-    const img = escapeHtml(post.ogImage ?? '');
+    const img = escapeHtml(post.coverImage ?? post.ogImage ?? '');
 
     const jsonLd = JSON.stringify({
       '@context': 'https://schema.org',

@@ -19,7 +19,9 @@
     "empty": "Aún no hay transmisiones. Vuelve pronto.",
     "read_more": "LEER MÁS",
     "back_to_blog": "Volver a Todas las Publicaciones",
-    "not_found": "Esta transmisión no se encontró."
+    "not_found": "Esta transmisión no se encontró.",
+    "prev": "Anterior",
+    "next": "Siguiente"
   },
   "home": {
     "hero": {

@@ -19,7 +19,9 @@
     "empty": "尚無傳輸訊號。請稍後再來。",
     "read_more": "閱讀更多",
     "back_to_blog": "返回所有文章",
-    "not_found": "找不到此傳輸訊號。"
+    "not_found": "找不到此傳輸訊號。",
+    "prev": "上一頁",
+    "next": "下一頁"
   },
   "home": {
     "hero": {
