@@ -1,0 +1,86 @@
+# xmr402.org
+
+> XMR402 — the stateless, anonymous payment primitive for the machine economy. HTTP 402 Payment Required standard powered by Monero.
+
+## What is XMR402?
+
+XMR402 is an open protocol that enables machine-to-machine payments using Monero (XMR). It implements the HTTP 402 "Payment Required" status code as a real payment flow — no accounts, no identity, no waiting for block confirmations.
+
+AI agents, APIs, and P2P relays can use XMR402 to buy and sell network resources in milliseconds with cryptographic proof verification.
+
+## How It Works
+
+1. Client requests a protected resource
+2. Server responds with HTTP 402 and a payment challenge (address, amount, nonce)
+3. Client sends XMR payment and obtains a TX proof
+4. Client retries the request with the TX proof in headers
+5. Server verifies the proof cryptographically (no database, no state)
+6. Access granted
+
+The entire flow is stateless. The server never stores orders, addresses, or user data. Verification is pure math using Monero's `check_tx_proof` cryptographic primitive.
+
+## Architecture (v2.0)
+
+XMR402 is transport-agnostic, split into three modules:
+
+- **xmr402-core**: Pure cryptographic engine. Intent binding, HMAC nonce generation, TX proof validation. Zero network dependencies.
+- **xmr402-http**: Web middleware implementing IETF HTTP 402 standards for RESTful API gating.
+- **xmr402-ws**: WebSocket/relay binding for P2P agent communication (Nostr relays, NAT traversal).
+
+## Key Properties
+
+- Stateless: No database, no order tracking, no address reuse
+- Anonymous: No identity required, Monero's privacy guarantees apply
+- Fast: 0-confirmation verification via TX proofs (milliseconds, not minutes)
+- Transport-agnostic: Works over HTTP, WebSocket, P2P relays, hidden services
+- Censorship-resistant: No central authority, no account freezing possible
+
+## Guard Implementations
+
+Drop-in HTTP 402 middleware available in multiple languages:
+
+- **TypeScript**: Express, Hono, WebSocket, Nostr (npm: xmr402-guard)
+- **Rust**: Axum framework (crate: xmr402-guard)
+- **Go**: net/http standard library
+
+## Pages
+
+- / — Protocol overview, specification summary, and quick-start guide
+- /ecosystem — Registry of XMR402-compatible projects, tools, and services
+- /donate — Support the protocol development
+- /blog — Technical articles on agent payments, privacy, and the machine economy
+
+## Whitepaper
+
+Full specification: https://xmr402.org/XMR402_Whitepaper.pdf
+
+Key sections:
+- The Dead End of Legacy Tech (why existing payment systems fail for AI agents)
+- Decoupled Architecture (core, http, ws modules)
+- HTTP Flow (402 challenge-response)
+- WebSocket Flow (P2P relay binding)
+- Security Model (replay protection, nonce binding, timing windows)
+- Comparison with x402, ERC-8183, and Lightning Network
+
+## Ecosystem Projects
+
+- Ripley Terminal — Desktop wallet with XMR402 support
+- Ripley Pocket — Custodial micro-payment gateway for AI agents
+- Ripley Gateway — Self-hosted payment bridge
+- Ripley Guard — HTTP 402 middleware (TS, Rust, Go)
+- Monero-MCP — AI agent toolkit with payment abilities
+- ClawAPIs — Professional API integration gateway
+
+## rip.family
+
+- kyc.rip — No-KYC exchange aggregator
+- stables.rip — Stablecoin censorship tracker
+- xmrprice.live — Monero price tracker
+- ripley.run — Monero toolkit and wallet
+- xmr402.org — XMR payment protocol (this site)
+
+## Contact
+
+- Twitter: @xmr402, @XBToshi
+- GitHub: https://github.com/xmr402/XMR402-org
+- Spec author: @XBToshi

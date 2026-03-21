@@ -1,0 +1,40 @@
+{
+  "name": "xmr402.org",
+  "description": "XMR402 — stateless, anonymous payment protocol for the machine economy. HTTP 402 Payment Required standard powered by Monero.",
+  "url": "https://xmr402.org",
+  "protocol": {
+    "name": "XMR402",
+    "version": "2.0",
+    "specification": "https://xmr402.org/XMR402_Whitepaper.pdf",
+    "description": "Transport-agnostic payment primitive using Monero TX proofs for stateless, anonymous machine-to-machine payments",
+    "flow": [
+      "Client requests protected resource",
+      "Server responds HTTP 402 with payment challenge (address, amount, nonce)",
+      "Client sends XMR payment and obtains TX proof",
+      "Client retries request with TX proof in headers",
+      "Server verifies proof cryptographically (stateless)",
+      "Access granted"
+    ]
+  },
+  "implementations": {
+    "typescript": {
+      "package": "xmr402-guard",
+      "registry": "npm",
+      "frameworks": ["Express", "Hono", "WebSocket", "Nostr"]
+    },
+    "rust": {
+      "package": "xmr402-guard",
+      "registry": "crates.io",
+      "frameworks": ["Axum"]
+    },
+    "go": {
+      "package": "xmr402-guard",
+      "frameworks": ["net/http"]
+    }
+  },
+  "contact": {
+    "twitter": "@xmr402",
+    "github": "https://github.com/xmr402/XMR402-org",
+    "website": "https://xmr402.org"
+  }
+}
