@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Orange glow -->
+    <radialGradient id="orangeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+
+    <!-- Left accent glow -->
+    <radialGradient id="leftGlow" cx="0%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0" />
+    </radialGradient>
+
+    <!-- Card gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- XMR card gradient (highlighted) -->
+    <linearGradient id="xmrCardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1200;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a1800;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+
+  <!-- Grid overlay (horizontal lines) -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <line x1="0" y1="63" x2="1200" y2="63" />
+    <line x1="0" y1="126" x2="1200" y2="126" />
+    <line x1="0" y1="189" x2="1200" y2="189" />
+    <line x1="0" y1="252" x2="1200" y2="252" />
+    <line x1="0" y1="315" x2="1200" y2="315" />
+    <line x1="0" y1="378" x2="1200" y2="378" />
+    <line x1="0" y1="441" x2="1200" y2="441" />
+    <line x1="0" y1="504" x2="1200" y2="504" />
+    <line x1="0" y1="567" x2="1200" y2="567" />
+  </g>
+  <!-- Grid overlay (vertical lines) -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <line x1="100" y1="0" x2="100" y2="630" />
+    <line x1="200" y1="0" x2="200" y2="630" />
+    <line x1="300" y1="0" x2="300" y2="630" />
+    <line x1="400" y1="0" x2="400" y2="630" />
+    <line x1="500" y1="0" x2="500" y2="630" />
+    <line x1="600" y1="0" x2="600" y2="630" />
+    <line x1="700" y1="0" x2="700" y2="630" />
+    <line x1="800" y1="0" x2="800" y2="630" />
+    <line x1="900" y1="0" x2="900" y2="630" />
+    <line x1="1000" y1="0" x2="1000" y2="630" />
+    <line x1="1100" y1="0" x2="1100" y2="630" />
+  </g>
+
+  <!-- Central orange glow -->
+  <rect width="1200" height="630" fill="url(#orangeGlow)" />
+
+  <!-- Left accent glow -->
+  <rect width="1200" height="630" fill="url(#leftGlow)" />
+
+  <!-- Top left orange accent bar -->
+  <rect x="60" y="60" width="4" height="80" fill="#ff6600" rx="2" />
+
+  <!-- Tag line -->
+  <text x="80" y="93" font-family="'Courier New', monospace" font-size="13" fill="#ff6600" letter-spacing="3" font-weight="bold">PROTOCOL ANALYSIS</text>
+  <text x="80" y="115" font-family="'Courier New', monospace" font-size="11" fill="#666688" letter-spacing="2">XMR402.ORG · MARCH 2026</text>
+
+  <!-- Main title -->
+  <text x="60" y="185" font-family="'Arial Black', 'Arial Bold', sans-serif" font-size="48" fill="#ffffff" font-weight="900" letter-spacing="-1">XMR402 vs. The</text>
+  <text x="60" y="245" font-family="'Arial Black', 'Arial Bold', sans-serif" font-size="48" fill="#ff6600" font-weight="900" letter-spacing="-1">Agentic Payment Stack</text>
+  <text x="60" y="290" font-family="'Arial', sans-serif" font-size="20" fill="#aaaacc" letter-spacing="0.5">A Protocol-by-Protocol Breakdown</text>
+
+  <!-- Divider line -->
+  <line x1="60" y1="315" x2="560" y2="315" stroke="#ff6600" stroke-opacity="0.4" stroke-width="1" />
+
+  <!-- Subtitle -->
+  <text x="60" y="345" font-family="'Arial', sans-serif" font-size="15" fill="#8888aa">x402 · ACP · AP2 · and the privacy-first challenger</text>
+
+  <!-- Protocol comparison cards -->
+  <!-- XMR402 card (highlighted) -->
+  <rect x="60" y="390" width="235" height="180" rx="8" fill="url(#xmrCardGrad)" stroke="#ff6600" stroke-width="2" stroke-opacity="0.8" />
+  <rect x="60" y="390" width="235" height="4" rx="2" fill="#ff6600" />
+  <text x="177" y="424" text-anchor="middle" font-family="'Courier New', monospace" font-size="14" fill="#ff6600" font-weight="bold" letter-spacing="1">XMR402</text>
+  <text x="177" y="448" text-anchor="middle" font-family="'Arial', sans-serif" font-size="11" fill="#aaaacc">Monero · HTTP 402</text>
+  <!-- Check marks -->
+  <text x="78" y="472" font-family="'Arial', sans-serif" font-size="11" fill="#44ff88">✓ Privacy (RingCT)</text>
+  <text x="78" y="490" font-family="'Arial', sans-serif" font-size="11" fill="#44ff88">✓ No KYC needed</text>
+  <text x="78" y="508" font-family="'Arial', sans-serif" font-size="11" fill="#44ff88">✓ 200ms verify</text>
+  <text x="78" y="526" font-family="'Arial', sans-serif" font-size="11" fill="#44ff88">✓ Zero fees</text>
+  <text x="78" y="544" font-family="'Arial', sans-serif" font-size="11" fill="#44ff88">✓ Censorship resistant</text>
+  <text x="177" y="562" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#ff6600" letter-spacing="1">★ AGENT-NATIVE</text>
+
+  <!-- x402 card -->
+  <rect x="315" y="390" width="175" height="180" rx="8" fill="url(#cardGrad)" stroke="#334" stroke-width="1" />
+  <rect x="315" y="390" width="175" height="4" rx="2" fill="#4466ff" />
+  <text x="402" y="424" text-anchor="middle" font-family="'Courier New', monospace" font-size="13" fill="#4466ff" font-weight="bold">x402</text>
+  <text x="402" y="444" text-anchor="middle" font-family="'Arial', sans-serif" font-size="10" fill="#888899">Coinbase · USDC</text>
+  <text x="330" y="466" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Public ledger</text>
+  <text x="330" y="483" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ USDC KYC</text>
+  <text x="330" y="500" font-family="'Arial', sans-serif" font-size="10" fill="#ffaa44">~ Gas fees</text>
+  <text x="330" y="517" font-family="'Arial', sans-serif" font-size="10" fill="#44ff88">✓ No human needed</text>
+  <text x="330" y="534" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Blacklistable</text>
+
+  <!-- ACP card -->
+  <rect x="510" y="390" width="175" height="180" rx="8" fill="url(#cardGrad)" stroke="#334" stroke-width="1" />
+  <rect x="510" y="390" width="175" height="4" rx="2" fill="#00aa44" />
+  <text x="597" y="424" text-anchor="middle" font-family="'Courier New', monospace" font-size="13" fill="#00aa44" font-weight="bold">ACP</text>
+  <text x="597" y="444" text-anchor="middle" font-family="'Arial', sans-serif" font-size="10" fill="#888899">OpenAI · Stripe</text>
+  <text x="525" y="466" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ No privacy</text>
+  <text x="525" y="483" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Card required</text>
+  <text x="525" y="500" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Stripe fees</text>
+  <text x="525" y="517" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Human needed</text>
+  <text x="525" y="534" font-family="'Arial', sans-serif" font-size="10" fill="#ffaa44">~ Human commerce</text>
+
+  <!-- AP2 card -->
+  <rect x="705" y="390" width="175" height="180" rx="8" fill="url(#cardGrad)" stroke="#334" stroke-width="1" />
+  <rect x="705" y="390" width="175" height="4" rx="2" fill="#ee4444" />
+  <text x="792" y="424" text-anchor="middle" font-family="'Courier New', monospace" font-size="13" fill="#ee4444" font-weight="bold">AP2</text>
+  <text x="792" y="444" text-anchor="middle" font-family="'Arial', sans-serif" font-size="10" fill="#888899">Google · x402 layer</text>
+  <text x="720" y="466" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Public ledger</text>
+  <text x="720" y="483" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Wallet KYC</text>
+  <text x="720" y="500" font-family="'Arial', sans-serif" font-size="10" fill="#ffaa44">~ Complex flows</text>
+  <text x="720" y="517" font-family="'Arial', sans-serif" font-size="10" fill="#ffaa44">~ Partial human</text>
+  <text x="720" y="534" font-family="'Arial', sans-serif" font-size="10" fill="#ff4444">✗ Blacklistable</text>
+
+  <!-- Right decorative element: abstract network nodes -->
+  <g opacity="0.25">
+    <!-- Nodes -->
+    <circle cx="980" cy="180" r="24" fill="none" stroke="#ff6600" stroke-width="1.5" />
+    <circle cx="1080" cy="130" r="18" fill="none" stroke="#ff6600" stroke-width="1" />
+    <circle cx="1130" cy="240" r="14" fill="none" stroke="#ff6600" stroke-width="1" />
+    <circle cx="1050" cy="310" r="20" fill="none" stroke="#ff6600" stroke-width="1.5" />
+    <circle cx="920" cy="290" r="16" fill="none" stroke="#ff6600" stroke-width="1" />
+    <circle cx="960" cy="360" r="12" fill="none" stroke="#ff6600" stroke-width="1" />
+    <!-- Connections -->
+    <line x1="980" y1="180" x2="1080" y2="130" stroke="#ff6600" stroke-width="1" />
+    <line x1="1080" y1="130" x2="1130" y2="240" stroke="#ff6600" stroke-width="1" />
+    <line x1="1130" y1="240" x2="1050" y2="310" stroke="#ff6600" stroke-width="1" />
+    <line x1="1050" y1="310" x2="920" y2="290" stroke="#ff6600" stroke-width="1" />
+    <line x1="920" y1="290" x2="980" y2="180" stroke="#ff6600" stroke-width="1" />
+    <line x1="980" y1="180" x2="1050" y2="310" stroke="#ff6600" stroke-width="0.5" stroke-dasharray="4,4" />
+    <line x1="920" y1="290" x2="960" y2="360" stroke="#ff6600" stroke-width="1" />
+    <!-- Node centers -->
+    <circle cx="980" cy="180" r="4" fill="#ff6600" opacity="0.8" />
+    <circle cx="1080" cy="130" r="3" fill="#ff6600" opacity="0.6" />
+    <circle cx="1130" cy="240" r="3" fill="#ff6600" opacity="0.6" />
+    <circle cx="1050" cy="310" r="4" fill="#ff6600" opacity="0.8" />
+    <circle cx="920" cy="290" r="3" fill="#ff6600" opacity="0.6" />
+    <circle cx="960" cy="360" r="2" fill="#ff6600" opacity="0.5" />
+    <!-- Node labels -->
+    <text x="980" y="175" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#ff6600" opacity="1.5">AGENT</text>
+    <text x="1080" y="107" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#ff6600">API</text>
+    <text x="1130" y="258" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#ff6600">DATA</text>
+    <text x="1050" y="330" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#ff6600">SERVICE</text>
+    <text x="905" y="287" text-anchor="middle" font-family="'Courier New', monospace" font-size="8" fill="#ff6600">COMPUTE</text>
+  </g>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="610" width="1200" height="20" fill="#ff6600" fill-opacity="0.08" />
+  <line x1="0" y1="610" x2="1200" y2="610" stroke="#ff6600" stroke-opacity="0.3" stroke-width="1" />
+  <text x="60" y="624" font-family="'Courier New', monospace" font-size="10" fill="#ff6600" opacity="0.7" letter-spacing="2">XMR402.ORG</text>
+  <text x="1140" y="624" text-anchor="end" font-family="'Courier New', monospace" font-size="10" fill="#666688" letter-spacing="1">@xbtoshi</text>
+
+  <!-- HTTP 402 badge top right -->
+  <rect x="1080" y="55" width="100" height="34" rx="4" fill="#ff6600" fill-opacity="0.15" stroke="#ff6600" stroke-width="1" stroke-opacity="0.5" />
+  <text x="1130" y="76" text-anchor="middle" font-family="'Courier New', monospace" font-size="12" fill="#ff6600" letter-spacing="1" font-weight="bold">HTTP 402</text>
+</svg>

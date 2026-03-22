@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a1a2e" stroke-width="0.5"/>
+    </pattern>
+    <linearGradient id="orangeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#ff3300;stop-opacity:0.4"/>
+    </linearGradient>
+    <linearGradient id="chainFade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6600;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#ff6600;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:0"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0f"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.5"/>
+
+  <!-- Ambient glow circles -->
+  <circle cx="300" cy="315" r="200" fill="#ff6600" opacity="0.03" filter="url(#softGlow)"/>
+  <circle cx="900" cy="315" r="200" fill="#ff6600" opacity="0.03" filter="url(#softGlow)"/>
+
+  <!-- Chain links connecting left and right -->
+  <line x1="420" y1="290" x2="780" y2="290" stroke="url(#chainFade)" stroke-width="2" stroke-dasharray="8,12"/>
+  <line x1="420" y1="340" x2="780" y2="340" stroke="url(#chainFade)" stroke-width="2" stroke-dasharray="8,12"/>
+
+  <!-- LEFT SIDE: Identity/Surveillance (locked) -->
+  <!-- Eye/surveillance icon -->
+  <g transform="translate(300, 250)" filter="url(#glow)">
+    <!-- Eye outline -->
+    <ellipse cx="0" cy="0" rx="60" ry="35" fill="none" stroke="#ff3333" stroke-width="2.5" opacity="0.7"/>
+    <!-- Iris -->
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#ff3333" stroke-width="2" opacity="0.7"/>
+    <!-- Pupil -->
+    <circle cx="0" cy="0" r="8" fill="#ff3333" opacity="0.5"/>
+    <!-- Scan lines -->
+    <line x1="-70" y1="-15" x2="70" y2="-15" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
+    <line x1="-70" y1="15" x2="70" y2="15" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Lock icon below eye -->
+  <g transform="translate(300, 330)" opacity="0.6">
+    <rect x="-12" y="-5" width="24" height="18" rx="3" fill="none" stroke="#ff3333" stroke-width="1.5"/>
+    <path d="M -7 -5 L -7 -12 A 7 7 0 0 1 7 -12 L 7 -5" fill="none" stroke="#ff3333" stroke-width="1.5"/>
+    <circle cx="0" cy="4" r="2" fill="#ff3333"/>
+  </g>
+
+  <!-- ID card outline -->
+  <g transform="translate(300, 380)" opacity="0.4">
+    <rect x="-30" y="-15" width="60" height="30" rx="4" fill="none" stroke="#ff3333" stroke-width="1"/>
+    <circle cx="-12" cy="-2" r="6" fill="none" stroke="#ff3333" stroke-width="0.8"/>
+    <line x1="0" y1="-6" x2="20" y2="-6" stroke="#ff3333" stroke-width="0.8"/>
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#ff3333" stroke-width="0.8"/>
+    <line x1="0" y1="6" x2="14" y2="6" stroke="#ff3333" stroke-width="0.8"/>
+  </g>
+
+  <!-- RIGHT SIDE: Privacy/Freedom (XMR402) -->
+  <!-- Shield icon -->
+  <g transform="translate(900, 250)" filter="url(#glow)">
+    <path d="M 0 -45 L 45 -25 L 45 15 Q 45 45 0 55 Q -45 45 -45 15 L -45 -25 Z" fill="none" stroke="#ff6600" stroke-width="2.5"/>
+    <!-- Monero-style M inside shield -->
+    <path d="M -20 15 L -20 -10 L 0 5 L 20 -10 L 20 15" fill="none" stroke="#ff6600" stroke-width="2.5"/>
+    <!-- Checkmark -->
+    <path d="M -10 25 L -3 32 L 12 18" fill="none" stroke="#ff6600" stroke-width="2" opacity="0.8"/>
+  </g>
+
+  <!-- Signal waves emanating from shield -->
+  <g transform="translate(900, 250)" opacity="0.3">
+    <path d="M 55 -10 Q 70 0 55 10" fill="none" stroke="#ff6600" stroke-width="1.5"/>
+    <path d="M 65 -18 Q 85 0 65 18" fill="none" stroke="#ff6600" stroke-width="1"/>
+    <path d="M -55 -10 Q -70 0 -55 10" fill="none" stroke="#ff6600" stroke-width="1.5"/>
+    <path d="M -65 -18 Q -85 0 -65 18" fill="none" stroke="#ff6600" stroke-width="1"/>
+  </g>
+
+  <!-- Binary/data streams -->
+  <g opacity="0.15" fill="#ff6600" font-family="monospace" font-size="10">
+    <text x="830" y="360">01001101 01011000</text>
+    <text x="850" y="380">10110010 01000010</text>
+    <text x="840" y="400">00101110 11010001</text>
+  </g>
+
+  <!-- CENTER: VS divider -->
+  <g transform="translate(600, 280)">
+    <circle cx="0" cy="0" r="25" fill="#0a0a0f" stroke="#ff6600" stroke-width="1.5" opacity="0.8"/>
+    <text x="0" y="6" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#ff6600" opacity="0.9">VS</text>
+  </g>
+
+  <!-- Labels -->
+  <text x="300" y="450" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#ff3333" opacity="0.7" letter-spacing="3">IDENTITY-BOUND</text>
+  <text x="900" y="450" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#ff6600" opacity="0.7" letter-spacing="3">PRIVACY-FIRST</text>
+
+  <!-- Title -->
+  <text x="600" y="520" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="bold" fill="#ffffff" letter-spacing="1">THE IDENTITY TRAP</text>
+  <text x="600" y="560" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#999999" letter-spacing="2">WHY AGENTKIT &amp; MPP PROVE PRIVACY PAYMENTS ARE NON-NEGOTIABLE</text>
+
+  <!-- XMR402 branding -->
+  <text x="600" y="600" text-anchor="middle" font-family="monospace" font-size="14" fill="#ff6600" opacity="0.6" letter-spacing="4">XMR402.ORG</text>
+
+  <!-- Decorative corner brackets -->
+  <g stroke="#ff6600" stroke-width="1" opacity="0.3">
+    <path d="M 30 30 L 30 60 M 30 30 L 60 30"/>
+    <path d="M 1170 30 L 1170 60 M 1170 30 L 1140 30"/>
+    <path d="M 30 600 L 30 570 M 30 600 L 60 600"/>
+    <path d="M 1170 600 L 1170 570 M 1170 600 L 1140 600"/>
+  </g>
+</svg>
