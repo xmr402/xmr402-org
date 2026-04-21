@@ -29,4 +29,10 @@ dist-ssr
 # Secrets
 .dev.vars
 .blog-api-key
+
+# Internal docs
+BLOG-GUIDE.md
+
+# Ripley Pocket (separate project, dev only)
+ripley-pocket/
 .claude/worktrees/
