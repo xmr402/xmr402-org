@@ -143,6 +143,44 @@ The timestamp enables replay window enforcement on the relay layer, matching the
 
 Because WebSocket connections are inherently push-based, SSE is not needed here. The relay naturally delivers `TASK_RESULT` frames the moment verification completes.
 
+### 4.2 In-Page Proof Hand-Back (v2.1)
+
+The Relay flow assumes the requestor still holds a **live WebSocket** at the instant it obtains `(txid, proof)`. That is automatic for an *in-context* wallet (a browser extension, an embedded webview, an in-app provider). It **breaks** for a *separate-context* wallet that returns the proof by navigating a `return_url` callback: the navigation reloads the page and **destroys the socket** before `PAYMENT_PROOF` can be pushed — and the reloaded page can only fall back to the HTTP transport, whose nonce is bound to a different request context and will not match a proof signed against the Relay `message`. The payment is valid on-chain but can never be presented on the channel that challenged it.
+
+To let the Relay flow complete from an in-context wallet — and to give the HTTP flow a reload-free path — v2.1 standardizes an optional **in-page hand-back**: the wallet returns the proof to the page it is already rendered over, via a DOM event, instead of navigating.
+
+**Wallet dispatches into the merchant page's `window`:**
+```js
+window.dispatchEvent(new CustomEvent('xmr402:proof', {
+  detail: { txid: "...", proof: "..." }
+}))
+```
+
+**Merchant page listens and routes the proof to whichever transport issued the challenge:**
+```js
+window.addEventListener('xmr402:proof', (e) => {
+  const { txid, proof } = e.detail
+  if (ws?.readyState === WebSocket.OPEN) {
+    // Relay: echo the proof over the STILL-OPEN socket, bound to the WS challenge nonce
+    ws.send(JSON.stringify({ type: 'PAYMENT_PROOF', txid, proof, message: challenge.message }))
+  } else {
+    // HTTP: replay the proof as an Authorization header — no reload
+    fetch(resource, { headers: { Authorization: `XMR402 txid="${txid}", proof="${proof}"` } })
+  }
+})
+```
+
+Because delivery never navigates, the socket is never torn down, so the requestor sends `PAYMENT_PROOF` over the same connection that received the challenge and the `message` nonce stays consistent from challenge → signature → verification.
+
+**Applies to both transports.** For HTTP the same event lets the page verify without a full navigation/reload — smoother UX, and it sidesteps the query-only-navigation no-ops some embedded webviews exhibit when a callback differs from the current URL by query string alone.
+
+**Backward compatibility:**
+- This is a **client-side transport convention only**. The wire protocol — challenge fields, `PAYMENT_PROOF` / `Authorization`, `check_tx_proof` — is unchanged. A guard cannot tell (and does not care) how the proof reached the page.
+- **Separate-context wallets** (a standalone app launched via the `xmr402://` deep link with no handle to the page's `window`) keep using the `return_url` navigation callback; the merchant page reads `xmr402_txid` / `xmr402_proof` from the query string on load. Pages SHOULD implement **both** the event listener and the URL-param path and treat whichever fires first as authoritative.
+- Pages that never register the listener are unaffected; wallets that cannot reach the page fall back to navigation. No negotiation, feature-detected implicitly — consistent with §3.1.
+
+*`xmr402:proof` is the recommended default event name. A wallet MAY additionally expose an injected `window.xmr402` provider object (EIP-1193-style request/response) for richer handshakes; that is left to a future revision.*
+
 ## 5. Tactical Breakthroughs
 
 ### Hyper-Speed: Mempool 0-Conf
@@ -167,7 +205,7 @@ XMR402 isn't just an isolated repo. It's the foundational protocol for autonomou
 
 * **Guard (The Shield):** Stateless middleware deployed on the server side or relay edge. Issues challenges and verifies proofs.
 * **Gateway (The Sword):** A tactical wallet interface bolted onto AI Agents. Gives models the power to read 402s or JSON challenges, pay autonomously, and breach firewalls.
-* **Terminal (The Anchor):** The human control deck. Triggers via Deep Link (`xmr402://`) when a browser hits a 402, offering one-click signature clearance.
+* **Terminal (The Anchor):** The human control deck. Triggers via Deep Link (`xmr402://`) when a browser hits a 402, offering one-click signature clearance. When rendered in-context (embedded browser / in-app webview) it hands the proof back in-page per §4.2 so a Relay socket survives; when standalone it returns via the `return_url` callback.
 
 ## 7. The Endgame
 
@@ -184,3 +222,4 @@ Code is law. Cryptography is consensus. Ethereum builds heavy, stateful toll boo
 | `features="sse"` signal | Added to `WWW-Authenticate` | N/A (WS is push-native) | No — v2.0 clients ignore unknown fields |
 | SSE response stream | Client opts in via `Accept: text/event-stream` | N/A | No — without opt-in, standard `200 OK` returned |
 | Recommended challenge TTL | 300 seconds | 300 seconds | No — servers MAY enforce, not MUST |
+| In-page proof hand-back (`xmr402:proof` event) | Optional reload-free verify | **Enables Relay from same-context wallets** (socket survives) | No — client-side convention; URL-param callback and socket wire format unchanged |

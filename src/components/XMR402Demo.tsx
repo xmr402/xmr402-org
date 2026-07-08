@@ -33,6 +33,14 @@ export const XMR402Demo: React.FC = () => {
   // WS specific state
   const [wsFrames, setWsFrames] = useState<Frame[]>([]);
   const wsRef = useRef<WebSocket | null>(null);
+  // 0-conf propagation retry: a proof submitted seconds after broadcast can hit the
+  // guard before its monerod has gossiped the tx into its mempool ("Failed to get
+  // transaction from daemon"). We keep the socket open and resend the same frame a few
+  // times until the tx propagates, rather than failing the whole handshake.
+  const pendingProofRef = useRef<{ type: string; txid: string; proof: string; message: string } | null>(null);
+  const wsRetryRef = useRef(0);
+  const WS_MAX_RETRIES = 12;
+  const WS_RETRY_MS = 3000;
 
   // Manual form inputs
   const [manualTxid, setManualTxid] = useState('');
@@ -97,6 +105,42 @@ export const XMR402Demo: React.FC = () => {
     }
   };
 
+  // Send a PAYMENT_PROOF over the live socket, remembering it so onmessage can resend on a
+  // transient propagation error (see WS_MAX_RETRIES). Resets the retry counter for a fresh
+  // submission.
+  const sendWsProof = (frame: { type: string; txid: string; proof: string; message: string }) => {
+    pendingProofRef.current = frame;
+    wsRetryRef.current = 0;
+    wsRef.current?.send(JSON.stringify(frame));
+    setWsFrames(prev => [...prev, { type: 'out', data: frame }]);
+  };
+
+  // In-page hand-back from the Ripley wallet (embedded ROS Browser): the wallet dispatches
+  // an `xmr402:proof` CustomEvent with {txid, proof} instead of navigating us. Route it the
+  // same way verifyManual does — over the live WebSocket for the WS channel (so the socket
+  // never has to survive a reload), or via the HTTP endpoint. This is what lets the WS demo
+  // complete under Ripley; the URL-param useEffect above stays as the plain-browser path.
+  useEffect(() => {
+    const onProof = (e: Event) => {
+      const detail = (e as CustomEvent).detail || {};
+      const txid = detail.txid as string;
+      const proof = detail.proof as string;
+      if (!txid || !proof) return;
+      setManualTxid(txid);
+      setManualProof(proof);
+      setStage('verifying');
+      setError(null);
+      if (protocol === 'ws' && wsRef.current?.readyState === WebSocket.OPEN && challenge) {
+        sendWsProof({ type: 'PAYMENT_PROOF', txid, proof, message: challenge.message });
+        // ACCESS_GRANTED / ERROR arrives via socket.onmessage
+      } else {
+        verifyCredentials(txid, proof);
+      }
+    };
+    window.addEventListener('xmr402:proof', onProof as EventListener);
+    return () => window.removeEventListener('xmr402:proof', onProof as EventListener);
+  }, [protocol, challenge]);
+
   const startHttpDemo = async () => {
     setStage('challenging');
     setError(null);
@@ -155,12 +199,36 @@ export const XMR402Demo: React.FC = () => {
           setTimeRemaining(300);
           setStage('pending');
         } else if (data.type === 'ACCESS_GRANTED') {
+          pendingProofRef.current = null;
+          wsRetryRef.current = 0;
+          // Detach handlers BEFORE closing: the guard closes its side right after granting,
+          // and in a plain Worker that close can surface to us as an error/abnormal close —
+          // which must NOT reset an already-authorized session back to the idle screen.
+          socket.onerror = null;
+          socket.onclose = null;
+          socket.onmessage = null;
           setIntel({ status: 'AUTHORIZED', intel: "Sovereign stream unlocked: 'The agents are moving into segment zero.'", txid: "WS_HANDSHAKE_COMPLETED" });
           setStage('authorized');
-          socket.close();
+          try { socket.close(); } catch { /* already closing */ }
         } else if (data.type === 'ERROR') {
-          setError(data.message);
-          setStage('idle');
+          // A freshly-broadcast tx may not have reached the guard's monerod mempool yet.
+          // That's transient — keep the socket open and resend the same proof a few times
+          // until it propagates, instead of failing the handshake.
+          const transient = /failed to get transaction|not found|not yet|mempool|daemon/i.test(String(data.message || ''));
+          if (transient && pendingProofRef.current && wsRetryRef.current < WS_MAX_RETRIES && socket.readyState === WebSocket.OPEN) {
+            wsRetryRef.current += 1;
+            setStage('verifying');
+            setError(null);
+            setTimeout(() => {
+              if (socket.readyState === WebSocket.OPEN && pendingProofRef.current) {
+                socket.send(JSON.stringify(pendingProofRef.current));
+                setWsFrames(prev => [...prev, { type: 'out', data: pendingProofRef.current }]);
+              }
+            }, WS_RETRY_MS);
+          } else {
+            setError(data.message);
+            setStage('idle');
+          }
         }
       } catch (_e) {
         setError(t('demo.error_ws_json'));
@@ -196,15 +264,8 @@ export const XMR402Demo: React.FC = () => {
     setError(null);
 
     if (protocol === 'ws' && wsRef.current?.readyState === WebSocket.OPEN && challenge) {
-      const proofFrame = {
-        type: 'PAYMENT_PROOF',
-        txid: manualTxid,
-        proof: manualProof,
-        message: challenge.message
-      };
-      wsRef.current.send(JSON.stringify(proofFrame));
-      setWsFrames(prev => [...prev, { type: 'out', data: proofFrame }]);
-      // Response will be handled in onmessage
+      sendWsProof({ type: 'PAYMENT_PROOF', txid: manualTxid, proof: manualProof, message: challenge.message });
+      // Response (incl. transient-propagation retries) is handled in onmessage
     } else {
       await verifyCredentials(manualTxid, manualProof);
     }
